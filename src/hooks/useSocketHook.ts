@@ -3,26 +3,41 @@ import SockJS from 'sockjs-client';
 import Stomp from 'stompjs';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import {
-  updateCurrentPage,
-  sixHatSelector,
   updateAdminState,
   getMessages,
   getUserHatInfo,
+  getUserList,
+  sixHatSelector,
+  getRandomHatList,
 } from '../redux/modules/sixHat';
+import mixHatsHelper from '@utils/mixHatsHelper';
 
-import { UserData } from '@redux/modules/sixHat/types';
+import { UserList, UserData, HatType } from '@redux/modules/sixHat/types';
 
-export type ResponseData = {
-  type: 'ENTER' | 'TALK' | 'HAT' | 'QUIT' | 'SUBJECT';
+export type SixHatResponseData = {
+  type: 'ENTER' | 'TALK' | 'HAT' | 'QUIT' | 'SUBJECT' | 'RANDOMHAT' | 'DEBATING';
+  roomId: string | null;
+  sender: string;
+  senderId: number | null;
+  hat: HatType;
+  message: string | null;
+  randomHat: UserList;
+};
+
+export type SixHatSendData = {
+  type: 'ENTER' | 'TALK' | 'HAT' | 'QUIT' | 'SUBJECT' | 'RANDOMHAT' | 'DEBATING';
   roomId: string | null;
   sender: string | null;
   senderId: number | null;
-  hat: string | null;
+  hat: HatType | null;
   message: string | null;
+  randomHat?: UserList;
 };
 
 export default function useSocketHook(type: 'sixhat' | 'brainwriting') {
   const dispatch = useAppDispatch();
+  const { userList, myHat } = useAppSelector(sixHatSelector);
+  console.log('유저리스트', userList);
   const _api = type == 'sixhat' ? '/subSH/api/sixHat/rooms/' : '/sub/api/brainWriting/rooms/';
   const _messageApi =
     type == 'sixhat' ? '/pubSH/api/sixHat/chat/message' : '/pub/api/brainWriting/chat/message';
@@ -42,13 +57,23 @@ export default function useSocketHook(type: 'sixhat' | 'brainwriting') {
 
     connectSH(senderId: number | null, roomId: string) {
       this._senderId = senderId;
-      this._roomId = roomId[0];
+      this._roomId = roomId;
+      console.log(senderId, roomId);
 
       this.StompClient.connect({ senderId: this._senderId }, () => {
         this.StompClient.subscribe(
           `/subSH/api/sixHat/rooms/${roomId}`,
           data => {
-            const response: ResponseData = JSON.parse(data.body) as ResponseData;
+            const response: SixHatResponseData = JSON.parse(data.body) as SixHatResponseData;
+
+            if (response.type === 'ENTER') {
+              const userData = {
+                nickname: response.sender,
+                hat: null,
+              };
+              dispatch(getUserList(userData));
+            }
+
             if (response.type === 'TALK') {
               const newMessage = {
                 nickname: response.sender,
@@ -57,15 +82,28 @@ export default function useSocketHook(type: 'sixhat' | 'brainwriting') {
               dispatch(getMessages(newMessage));
             }
 
+            if (response.type === 'DEBATING') {
+              const newMessage = {
+                nickname: response.sender,
+                message: response.message,
+                hat: response.hat,
+              };
+              dispatch(getMessages(newMessage));
+            }
+
             if (response.type === 'HAT') {
-              const userInfo : UserData = {
+              const userInfo: UserData = {
                 nickname: response.sender,
                 hat: response.hat,
               };
               dispatch(getUserHatInfo(userInfo));
             }
+
+            if (response.type === 'RANDOMHAT') {
+              dispatch(getRandomHatList(response.randomHat));
+            }
           },
-          { senderId: this._senderId },
+          { senderId: this._senderId, category: 'SH' },
         );
       });
     }
@@ -81,10 +119,9 @@ export default function useSocketHook(type: 'sixhat' | 'brainwriting') {
       }, 0.1);
     };
 
-    send = (data: ResponseData) => {
+    send = (data: SixHatSendData) => {
       this.waitForConnection(this.StompClient, () => {
         this.StompClient.debug = () => {};
-        console.log(data);
         this.StompClient.send(
           '/pubSH/api/sixHat/chat/message',
           { senderId: this._senderId },
@@ -96,7 +133,7 @@ export default function useSocketHook(type: 'sixhat' | 'brainwriting') {
     sendMessage = (sender: string, message: string) => {
       try {
         // send할 데이터
-        const data: ResponseData = {
+        const data: SixHatSendData = {
           type: 'TALK',
           roomId: this._roomId,
           sender: sender,
@@ -110,10 +147,27 @@ export default function useSocketHook(type: 'sixhat' | 'brainwriting') {
       }
     };
 
-    sendHatData = (sender: string | null, hat: string) => {
+    sendMessageDV = (sender: string, message: string) => {
       try {
         // send할 데이터
-        const data: ResponseData = {
+        const data: SixHatSendData = {
+          type: 'DEBATING',
+          roomId: this._roomId,
+          sender: sender,
+          senderId: this._senderId,
+          hat: myHat,
+          message: message,
+        };
+        this.send(data);
+      } catch (e) {
+        console.log('message 소켓 함수 에러', e);
+      }
+    };
+
+    sendHatData = (sender: string | null, hat: HatType) => {
+      try {
+        // send할 데이터
+        const data: SixHatSendData = {
           type: 'HAT',
           roomId: this._roomId,
           sender: sender,
@@ -127,10 +181,28 @@ export default function useSocketHook(type: 'sixhat' | 'brainwriting') {
       }
     };
 
+    sendRandomHatData = (userHatList: UserList) => {
+      try {
+        // send할 데이터
+        const data: SixHatSendData = {
+          type: 'RANDOMHAT',
+          roomId: this._roomId,
+          sender: null,
+          senderId: this._senderId,
+          hat: null,
+          message: null,
+          randomHat: mixHatsHelper(userHatList),
+        };
+        this.send(data);
+      } catch (e) {
+        console.log('message 소켓 함수 에러', e);
+      }
+    };
+
     submitSubject = (subject: string) => {
       try {
         // send할 데이터
-        const data: ResponseData = {
+        const data: SixHatSendData = {
           type: 'SUBJECT',
           roomId: this._roomId,
           sender: null,

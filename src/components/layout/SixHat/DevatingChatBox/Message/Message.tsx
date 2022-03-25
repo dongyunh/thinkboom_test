@@ -1,14 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
 import { themedPalette } from '../../../../../theme/styleTheme';
-const HatSrc = require('../../../../../../public/hat.png');
+const HatSrc = require('../../../../../../public/asset/hat.png');
 import { HatType } from '../../../../../redux/modules/sixHat/types';
+import { HatImage } from '@components/common';
 
 type MessageProps = {
   isMe: boolean;
   message: string | null;
   hatName: string | null;
-  hat?: HatType ;
+  hat: HatType;
 };
 
 type StyleProps = {
@@ -23,7 +24,7 @@ const Message = ({ isMe, message, hatName, hat }: MessageProps) => {
       ) : (
         <OtherMessageBox>
           <ProfileBox>
-            <HatImg src={HatSrc} />
+            <HatImage type={hat} width={30} height={30} />
             <HatName>{hatName}</HatName>
           </ProfileBox>
           <Box>{message}</Box>

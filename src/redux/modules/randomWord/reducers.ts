@@ -5,6 +5,7 @@ import {
   getRandomWord,
   postPickedWords,
   getSubject,
+  getResultWord,
 } from './actions';
 
 export type RandomWordState = {
@@ -13,7 +14,7 @@ export type RandomWordState = {
   pickedWordList: string[];
   pending: boolean;
   error: boolean;
-  subject: string;
+  subject: string | null;
 };
 
 const initialState: RandomWordState = {
@@ -22,7 +23,7 @@ const initialState: RandomWordState = {
   pickedWordList: [],
   pending: false,
   error: false,
-  subject: '',
+  subject: null,
 };
 
 //createReducer로 reducer 생성.
@@ -32,8 +33,10 @@ export const randomWordReducer = createReducer(initialState, builder => {
       state.currentPage = action.payload;
     })
     .addCase(selectWord, (state, action) => {
+      if (state.pickedWordList.length > 5) return;
       const { word, idx } = action.payload;
       state.randomWordList[idx] = '';
+      console.log(state.randomWordList);
       state.pickedWordList.push(word);
     })
     .addCase(getRandomWord.pending, state => {
@@ -52,5 +55,9 @@ export const randomWordReducer = createReducer(initialState, builder => {
     })
     .addCase(getSubject, (state, action) => {
       state.subject = action.payload;
+    })
+    .addCase(getResultWord.fulfilled, (state, { payload }) => {
+      state.pending = false;
+      state.pickedWordList = payload;
     });
 });

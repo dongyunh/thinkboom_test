@@ -7,8 +7,8 @@ export type ChatData = {
 };
 
 export type UserData = {
-  nickname: string | null;
-  hat: string | null;
+  nickname: string;
+  hat: HatType | null;
 };
 
 export type UserList = UserData[];
@@ -18,9 +18,11 @@ export type ChatHistoryType = ChatData[];
 export type SixHatState = {
   currentPage: number;
   nickname: string | null;
+  senderId: number | null;
   isAdmin: boolean;
   isSubmit: boolean;
   chatHistory?: ChatHistoryType;
   subject?: string;
   userList: UserList;
+  myHat: HatType;
 };

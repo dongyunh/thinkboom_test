@@ -1,10 +1,18 @@
 import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { RootState } from '../../store';
+import { useRouter } from 'next/router';
 
 type SelectWordPayload = {
   word: string;
   idx: number;
+};
+
+type ResponseType = {
+  data: {
+    rwId: string;
+    wordList: string[];
+  };
 };
 
 const prefix = 'randomWord';
@@ -14,8 +22,14 @@ export const selectWord = createAction<SelectWordPayload>(`${prefix}/SELECT_WORD
 export const getSubject = createAction<string>(`${prefix}/GET_SUBJECT`);
 
 export const getRandomWord = createAsyncThunk(`${prefix}/GET_RANDOM_WORD`, async () => {
-  const response = await axios.get('http://3.38.151.99/randomword');
+  const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/randomWord`);
   return response.data;
+});
+
+export const getResultWord = createAsyncThunk(`${prefix}/GET_RESULT_WORD`, async (rwId: string) => {
+  const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/gallery/randomWord/${rwId}`);
+  console.log(response.data.wordList);
+  return response.data.wordList;
 });
 
 export const postPickedWords = createAsyncThunk(
@@ -23,10 +37,13 @@ export const postPickedWords = createAsyncThunk(
   async (arg, { getState }) => {
     const { randomWord } = getState() as RootState;
     const { pickedWordList } = randomWord;
-    const response = await axios.post('http://3.38.151.99/randomword', {
-      wordList: pickedWordList,
-    });
 
-    console.log(response);
+    const response: ResponseType = await axios.post(
+      `${process.env.NEXT_PUBLIC_API_URL}/randomWord`,
+      {
+        wordList: pickedWordList,
+      },
+    );
+    console.log(response.data.rwId);
   },
 );

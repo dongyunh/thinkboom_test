@@ -2,7 +2,7 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 import React from 'react';
 import { Button } from './Button';
 export default {
-  title: 'Common/Button',
+  title: 'Common_temp/Button',
   component: Button,
   parameters: {
     docs: {
@@ -26,4 +26,8 @@ const Template: ComponentStory<typeof Button> = args => <Button {...args} />;
 export const DefaultButton = Template.bind({});
 DefaultButton.args = {
   text: '입장하기',
+};
+export const DefaultButton1 = Template.bind({});
+DefaultButton1.args = {
+  text: '테스트',
 };

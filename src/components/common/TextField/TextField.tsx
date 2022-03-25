@@ -55,7 +55,7 @@ const Input = styled.input<StyleProps>`
   :focus {
     outline: none !important;
     border: 5px solid ${themedPalette.input_focus};
-    ${props => props.isError && `border: 5px solid ${themedPalette.input_error}`}
+    ${props => props.isError && `border: 5px solid ${themedPalette.input_error}`};
   }
 
   ${props => props.isError && `border: 5px solid ${themedPalette.red}`};

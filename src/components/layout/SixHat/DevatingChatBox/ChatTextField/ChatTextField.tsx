@@ -1,16 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { themedPalette } from '../../../../../theme/styleTheme';
 
 type ChatTextFieldProps = {
   onChange?: () => void;
+  onClick: (arg: string) => void;
 };
 
-const ChatTextField = ({ onChange }: ChatTextFieldProps) => {
+const ChatTextField = ({ onChange, onClick }: ChatTextFieldProps) => {
+  const [contents, setContents] = useState<string>('');
+
+  const handleOnClick = () => {
+    onClick(contents);
+  };
+
   return (
     <TextFieldContainer>
-      <TextField />
-      <Button>입력</Button>
+      <TextField onChange={e => setContents(e.target.value)} />
+      <Button onClick={handleOnClick}>입력</Button>
     </TextFieldContainer>
   );
 };

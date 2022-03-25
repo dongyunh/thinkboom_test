@@ -23,14 +23,6 @@ const SelectWord = () => {
     dispatch(selectWord({ word, idx }));
   };
 
-  const handlePostPickedWord = async () => {
-    const res = await axios.post('http://c906-121-131-137-167.ngrok.io/randomword', {
-      wordList: pickedWordList,
-    });
-
-    router.push(`/randomWord/result/${res.data.id}`);
-  };
-
   return (
     <>
       <CenterLayout>
@@ -45,26 +37,11 @@ const SelectWord = () => {
 
 const Empty = styled.div``;
 
-const WordsWrapper = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
-  gap: 20px;
-`;
-
 const CenterBox = styled.div`
   width: 100%;
   display: flex;
   padding: 50px;
   justify-content: space-evenly;
-  align-items: center;
-`;
-
-const TextBox = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
   align-items: center;
 `;
 

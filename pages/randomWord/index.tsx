@@ -32,5 +32,5 @@ const RandomWord = () => {
 
   return <InteractivePage pages={pages} currentPage={currentPage} />;
 };
-console.log('확인!')
+console.log('확인!');
 export default RandomWord;

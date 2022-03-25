@@ -2,14 +2,16 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { themedPalette } from '../../../../theme/styleTheme';
 import { Card } from '../../../common';
-const HatSrc = require('../../../../../public/hat.png');
+import { HatImage } from '@components/common';
+import hatData from '../../../../mock/hatData';
+import { UserList, HatType } from '@redux/modules/sixHat/types';
 
 type SelectHatBoxProps = {
   subject: string;
-  myHat?: string;
-  userList: string[];
+  myHat: HatType;
+  userList: UserList;
   onClickHat?: (arg: any) => void;
-  onClickRandom?: () => void;
+  onClickRandom: (userHatList: UserList) => void;
 };
 
 type StyleProps = {
@@ -26,33 +28,9 @@ const SelectHatBox = ({
   onClickRandom,
 }: SelectHatBoxProps) => {
   const [isMouseOver, setIsMouseOver] = useState(false);
-  const hatData = [
-    { src: HatSrc, value: 'red', text: '빨간모자', desc: '직관주의자, 순간적인 느낌에 충실' },
-    {
-      src: HatSrc,
-      value: 'blue',
-      text: '파란모자',
-      desc: '낙관주의자, 아이디어를 긍정적으로 생각',
-    },
-    { src: HatSrc, value: 'green', text: '초록모자', desc: '몽상주의자, 새로운 아이디어 생성' },
-    {
-      src: HatSrc,
-      value: 'black',
-      text: '검정모자',
-      desc: '사회자, 회의를 주관하며 요약 및 결론을 유도',
-    },
-    {
-      src: HatSrc,
-      value: 'yellow',
-      text: '노란모자',
-      desc: '비관주의자, 아이디어의 문제점을 도출',
-    },
-    { src: HatSrc, value: 'white', text: '하얀모자', desc: '이성주의자, 객관적인 정보에 집중' },
-  ];
 
   const handleOnClickHat = (hat: string) => {
     if (!onClickHat) return;
-    console.log(hat);
     onClickHat(hat);
   };
 
@@ -60,23 +38,28 @@ const SelectHatBox = ({
     <Container>
       <SubjectBox>
         {subject}
-        <RandomButton onClick={onClickRandom}>랜덤</RandomButton>
+        <RandomButton onClick={() => onClickRandom(userList)}>랜덤</RandomButton>
       </SubjectBox>
       <DownBox>
         <UserListBox>
           <MyHatBox>
-            <HatImg src={HatSrc} width={70} />
+            <HatImage type={myHat} width={80} height={80} />
           </MyHatBox>
-          <UserList>
-            {userList.map(user => {
-              return <User>{user}</User>;
+          <UserListColumn>
+            {userList.map((user, idx) => {
+              return (
+                <UserProfile key={idx}>
+                  {user.hat !== null && <HatImage type={user.hat} width={20} height={20} />}
+                  <UserNickname>{user.nickname}</UserNickname>
+                </UserProfile>
+              );
             })}
-          </UserList>
+          </UserListColumn>
         </UserListBox>
         <CardListBox>
-          {hatData.map(hat => {
+          {hatData.map((hat, idx) => {
             return (
-              <Card width={200} height={200} key={hat.value}>
+              <Card width={200} height={200} key={idx}>
                 {isMouseOver ? (
                   <HatBox isMouseOver={isMouseOver}>
                     <h3>{hat.text}</h3>
@@ -89,7 +72,7 @@ const SelectHatBox = ({
                   </HatBox>
                 ) : (
                   <HatBox>
-                    <HatImg width={100} src={hat.src} />
+                    <HatImage type={hat.value} width={100} />
                     <div>{hat.text}</div>
                     <TouchArea
                       onMouseOver={() => setIsMouseOver(true)}
@@ -155,7 +138,7 @@ const DownBox = styled.div`
 
 const UserListBox = styled.div`
   width: 212px;
-  height: 514px;
+  height: 508px;
   border-right: 5px solid ${themedPalette.black};
   box-sizing: border-box;
   display: flex;
@@ -175,19 +158,18 @@ const CardListBox = styled.div`
   padding: 32px 48px;
 `;
 
-const UserList = styled.div`
+const UserListColumn = styled.div`
   display: flex;
   flex-direction: column;
 `;
 
-const User = styled.div`
-  margin-bottom: 8px;
-`;
+const UserNickname = styled.div``;
 
-const HatImg = styled.img<StyleProps>`
-  width: ${props => props.width}px;
-  height: ${props => props.height}px;
-  padding: 15px;
+const UserProfile = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-top: 10px;
 `;
 
 const HatBox = styled.div<StyleProps>`

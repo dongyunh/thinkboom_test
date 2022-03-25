@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import type { NextPage } from 'next';
 import styled from 'styled-components';
 import { Main } from '@components/layout/Main';
@@ -24,7 +24,10 @@ const Home: NextPage = () => {
     document.body.dataset.theme = 'light';
   };
 
-  loadTheme();
+  useEffect(() => {
+    localStorage.removeItem('persist:root');
+    loadTheme();
+  }, []);
 
   return (
     <Main>

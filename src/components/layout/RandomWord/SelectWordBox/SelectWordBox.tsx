@@ -2,40 +2,43 @@ import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { themedPalette } from '../../../../theme/styleTheme';
 import { useAppSelector, useAppDispatch } from '@redux/hooks';
-import {
-  randomWordSelector,
-  getRandomWord,
-  selectWord,
-  postPickedWords,
-} from '@redux/modules/randomWord';
+import { randomWordSelector, getRandomWord, selectWord } from '@redux/modules/randomWord';
+import { postPickedWords } from '../../../../utils/postPickedWords';
 import { Card, PrimaryButton } from '@components/common';
+import { useRouter } from 'next/router';
 
 const SelectWordBox = () => {
   const dispatch = useAppDispatch();
-  const { randomWordList, pickedWordList } = useAppSelector(randomWordSelector);
+  const router = useRouter();
+  const { randomWordList, pickedWordList, subject } = useAppSelector(randomWordSelector);
 
   const handleGetRandomWord = () => {
     dispatch(getRandomWord());
   };
 
-  const handleComplete = () => {
-    dispatch(postPickedWords());
+  //완료버튼
+  const handleComplete = async () => {
+    const rwId = await postPickedWords(pickedWordList);
+    await router.push(`/randomWord/result/${rwId}`);
   };
 
+  // 처음 화면들어오면 랜덤 워드 받아오기
   useEffect(() => {
     handleGetRandomWord();
   }, []);
 
   return (
     <Container>
-      <SubjectBox>주제어</SubjectBox>
+      <SubjectBox>{subject}</SubjectBox>
       <DownBox>
         <LeftBox>
           <WordGrid>
             {randomWordList.map((word, idx) => {
               return (
-                <Card width={350} height={110} key={word}>
-                  <RandomWordBox onClick={() => selectWord({ word, idx })}>{word}</RandomWordBox>
+                <Card width={250} height={90} key={idx}>
+                  <RandomWordBox onClick={() => dispatch(selectWord({ word, idx }))}>
+                    {word}
+                  </RandomWordBox>
                 </Card>
               );
             })}
@@ -47,7 +50,7 @@ const SelectWordBox = () => {
         <RightBox>
           <SelectedWords>
             {pickedWordList.map(word => {
-              return <Word>{word}</Word>;
+              return <Word key={word}>{word}</Word>;
             })}
           </SelectedWords>
           <CompleteBox onClick={handleComplete}>완료</CompleteBox>
@@ -107,10 +110,15 @@ const SelectedWords = styled.div`
   width: 320px;
   height: 100%;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
 `;
 
 const Word = styled.div`
   color: ${themedPalette.main_text1};
+  font-size: 22px;
 `;
 
 const CompleteBox = styled.div`
@@ -123,12 +131,15 @@ const CompleteBox = styled.div`
   align-items: center;
   font-size: 26px;
   border-radius: 0 0 18px 0;
+  cursor: pointer;
 `;
 
 const WordGrid = styled.div`
+  padding: 90px 25px;
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr;
+  row-gap: 28px;
   gap: 28px;
 `;
 
@@ -139,6 +150,7 @@ const RandomWordBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  font-size: 22px;
 `;
 
 export { SelectWordBox };

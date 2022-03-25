@@ -60,6 +60,8 @@ const StyledButton = styled.button<StyledProps>`
     background-color: ${themedPalette.cute_button_disabled};
     color: ${themedPalette.main_text1};
     cursor: not-allowed;
+    transform: translate(8px, 8px);
+    border: none;
   }
 
   :hover {

@@ -1,8 +1,7 @@
 import React from 'react';
 import { TextField } from '@mui/material';
 import styled from 'styled-components';
-import { HeaderBar, Card, PrimaryButton } from '../../common';
-import { themedPalette } from '../../../theme';
+import { HeaderBar, Card, Button } from '../../common';
 
 type StartProps = {
   title: string;
@@ -16,18 +15,23 @@ const StartPage = ({ title, desc, onClick }: StartProps) => {
     onClick();
   };
   return (
-    <Grid>
-      <ContentWrapper>
-        <RightContent>
-          <Title>{title}</Title>
-          <Desc>{desc}</Desc>
-          <ButtonWrapper>
-            <PrimaryButton text="시작하기" onClick={handleOnClick} />
-          </ButtonWrapper>
-        </RightContent>
-        <Card width={600} height={350} />
-      </ContentWrapper>
-    </Grid>
+    <>
+      <HeaderBar>
+        <h1>ThinkBoom</h1>
+      </HeaderBar>
+      <Grid>
+        <ContentWrapper>
+          <RightContent>
+            <h1>{title}</h1>
+            <p>{desc}</p>
+            <ButtonWrapper>
+              <Button text="시작하기" onClick={handleOnClick} />
+            </ButtonWrapper>
+          </RightContent>
+          <Card width={600} height={350} />
+        </ContentWrapper>
+      </Grid>
+    </>
   );
 };
 
@@ -57,14 +61,6 @@ const RightContent = styled.div`
 
 const ButtonWrapper = styled.div`
   width: 220px;
-`;
-
-const Title = styled.h1`
-  color: ${themedPalette.main_text1};
-`;
-
-const Desc = styled.p`
-  color: ${themedPalette.main_text1};
 `;
 
 export { StartPage };

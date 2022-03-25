@@ -33,8 +33,8 @@ const NicknameModal = ({ title, onClick }: NicknameModalProps) => {
         </TitleWrapper>
         <TextFieldWrapper>
           <TextField
-            label="사용자명"
-            errorText="사용자명 - 2~6자 이내로 설정해주세요"
+            label="닉네임"
+            errorText="닉네임은 2~6자 이내로 설정해주세요"
             hintText="닉네임을 입력해주세요 (2~6자)"
             isError={isError}
             onChange={checkValidation}

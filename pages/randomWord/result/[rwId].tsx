@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { ResultModal } from '../../common/Modals';
+import { ResultModal } from '../../../src/components/common/Modals';
 import { Button } from '@mui/material';
 import { GetServerSideProps } from 'next';
 import { CenterLayout } from '@components/common';
 import styled from 'styled-components';
-import { themedPalette } from '../../../theme/styleTheme';
+import { themedPalette } from '../../../src/theme/styleTheme';
 import { useAppSelector, useAppDispatch } from '@redux/hooks';
 import { selectRandomWord, getResultWord } from '@redux/modules/randomWord';
 
@@ -34,9 +34,9 @@ const Result = ({ rwId }: ResultProps) => {
       <>
         <Title>선택된 단어</Title>
         <ResultGrid>
-          {/* {pickedWordList?.map((word, idx) => {
+          {pickedWordList?.map((word, idx) => {
             return <Word key={idx}>{word}</Word>;
-          })} */}
+          })}
         </ResultGrid>
         {isOpen && <ResultModal onClickBtn1={handleCancel} onClickBtn2={handleConfirm} />}
       </>
@@ -68,7 +68,7 @@ const Word = styled.div`
   font-size: 20px;
 `;
 
-export { Result };
+export default Result;
 
 export const getServerSideProps: GetServerSideProps = async context => {
   const { query } = context;
