@@ -17,7 +17,8 @@ const RandomWord = () => {
       component: (
         <StartPage
           title="Random Word"
-          desc="학교 동아리, 게임 그룹, 세계 예술 감상 커뮤니티에 소속되어 유대감을 느낄 수 있는"
+          pageType="randomword"
+          desc="주제와 전혀 관련없는 단어들을 선택하여 그 단어에서 연상되는 의미와 주제를 연계시켜 아이디어를 도출해내는 기법입니다."
           onClick={() => handleNextPage(1)}
         />
       ),

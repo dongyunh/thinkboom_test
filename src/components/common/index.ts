@@ -19,3 +19,4 @@ export * from './Desc';
 export * from './DarkModeToggle';
 export * from './SkipButton';
 export * from './HatImage';
+export * from './ShareIcon';

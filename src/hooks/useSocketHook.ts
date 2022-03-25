@@ -9,8 +9,10 @@ import {
   getUserList,
   sixHatSelector,
   getRandomHatList,
+  getSubjectSH,
 } from '../redux/modules/sixHat';
 import mixHatsHelper from '@utils/mixHatsHelper';
+import { toast } from 'react-toastify';
 
 import { UserList, UserData, HatType } from '@redux/modules/sixHat/types';
 
@@ -22,6 +24,7 @@ export type SixHatResponseData = {
   hat: HatType;
   message: string | null;
   randomHat: UserList;
+  subject: string;
 };
 
 export type SixHatSendData = {
@@ -32,12 +35,13 @@ export type SixHatSendData = {
   hat: HatType | null;
   message: string | null;
   randomHat?: UserList;
+  subject?: string;
 };
 
 export default function useSocketHook(type: 'sixhat' | 'brainwriting') {
   const dispatch = useAppDispatch();
-  const { userList, myHat } = useAppSelector(sixHatSelector);
-  console.log('유저리스트', userList);
+  const {  myHat } = useAppSelector(sixHatSelector);
+
   const _api = type == 'sixhat' ? '/subSH/api/sixHat/rooms/' : '/sub/api/brainWriting/rooms/';
   const _messageApi =
     type == 'sixhat' ? '/pubSH/api/sixHat/chat/message' : '/pub/api/brainWriting/chat/message';
@@ -80,6 +84,7 @@ export default function useSocketHook(type: 'sixhat' | 'brainwriting') {
                 message: response.message,
               };
               dispatch(getMessages(newMessage));
+              toast.info('메시지가 도착했습니다');
             }
 
             if (response.type === 'DEBATING') {
@@ -89,6 +94,11 @@ export default function useSocketHook(type: 'sixhat' | 'brainwriting') {
                 hat: response.hat,
               };
               dispatch(getMessages(newMessage));
+            }
+
+            if (response.type === 'SUBJECT') {
+              dispatch(getSubjectSH(response.subject));
+              toast.info('주제가 공유되었습니다');
             }
 
             if (response.type === 'HAT') {
@@ -147,7 +157,7 @@ export default function useSocketHook(type: 'sixhat' | 'brainwriting') {
       }
     };
 
-    sendMessageDV = (sender: string, message: string) => {
+    sendMessageDB = (sender: string, message: string) => {
       try {
         // send할 데이터
         const data: SixHatSendData = {
@@ -200,6 +210,7 @@ export default function useSocketHook(type: 'sixhat' | 'brainwriting') {
     };
 
     submitSubject = (subject: string) => {
+      console.log(subject);
       try {
         // send할 데이터
         const data: SixHatSendData = {
@@ -209,6 +220,7 @@ export default function useSocketHook(type: 'sixhat' | 'brainwriting') {
           senderId: this._senderId,
           hat: null,
           message: null,
+          subject: subject,
         };
         this.send(data);
       } catch (e) {

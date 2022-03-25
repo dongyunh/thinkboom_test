@@ -18,7 +18,7 @@ const SelectWordBox = () => {
 
   //완료버튼
   const handleComplete = async () => {
-    const rwId = await postPickedWords(pickedWordList);
+    const rwId = await postPickedWords(pickedWordList, subject);
     await router.push(`/randomWord/result/${rwId}`);
   };
 

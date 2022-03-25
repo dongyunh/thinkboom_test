@@ -49,11 +49,11 @@ const DevatingChatBox = ({ onClick }: DevatingChatBoxProps) => {
         </UserListBox>
         <ChatViewBox>
           <MessageBox>
-            {chatHistory?.map(data => {
+            {chatHistory?.map((data, idx) => {
               if (data.hat) {
                 return (
                   <Message
-                    key={data.nickname}
+                    key={idx}
                     isMe={data.nickname === nickname}
                     message={data.message}
                     hatName={hatName[data.hat]}

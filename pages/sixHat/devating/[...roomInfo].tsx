@@ -1,7 +1,7 @@
 import React, { useState, useEffect, createContext } from 'react';
 import { useRouter } from 'next/router';
 import { GetServerSideProps } from 'next';
-import { InteractivePage, WaitingRoom } from '../../../src/components/common';
+import { InteractivePage, WaitingRoom, Share } from '../../../src/components/common';
 import { SelectHat, DevatingRoom } from '../../../src/components/layout/SixHat';
 import { useAppDispatch, useAppSelector } from '../../../src/redux/hooks';
 import {
@@ -19,6 +19,10 @@ import styled from 'styled-components';
 import useSocketHook from '../../../src/hooks/useSocketHook';
 import { makeStyles } from '@mui/styles';
 import { HatType, UserList } from '@redux/modules/sixHat/types';
+import { ToastContainer } from 'react-toastify';
+import copyUrlHelper from '@utils/copyUrlHelper';
+
+import 'react-toastify/dist/ReactToastify.css';
 
 const useStyles = makeStyles({
   icon: {
@@ -38,8 +42,8 @@ let ConnectedSocket: any;
 
 const SettingPage = ({ roomInfo }: SettingPageProps) => {
   const dispatch = useAppDispatch();
-  const { currentPage, nickname, chatHistory, senderId } = useAppSelector(sixHatSelector);
-  const [subject, setSubject] = useState();
+  const { currentPage, nickname, chatHistory, senderId, subject } = useAppSelector(sixHatSelector);
+
   const [isChatOpen, setIsChatOpen] = useState(false);
   const HandleSocket = useSocketHook('sixhat');
   const classes = useStyles();
@@ -62,7 +66,7 @@ const SettingPage = ({ roomInfo }: SettingPageProps) => {
   };
 
   const handelSendDevatingMessage = (message: string) => {
-    ConnectedSocket.sendMessageDV(nickname, message);
+    ConnectedSocket.sendMessageDB(nickname, message);
   };
 
   const handleNextPage = (pageNum: number) => {
@@ -70,8 +74,8 @@ const SettingPage = ({ roomInfo }: SettingPageProps) => {
   };
 
   const handleSubmitSubject = () => {
+    ConnectedSocket.submitSubject(subject);
     dispatch(changeIsSubmitState(true));
-    ConnectedSocket.sendSubject(subject);
   };
 
   const handleUpdateNickname = async (enteredName: string) => {
@@ -111,17 +115,20 @@ const SettingPage = ({ roomInfo }: SettingPageProps) => {
   ];
 
   const contextValue = {
-    setSubject: setSubject,
     sendMessage,
   };
 
   return (
     <WaitingRoomContext.Provider value={contextValue}>
+      <ToastContainer position="bottom-left" autoClose={3000} theme="dark" />
       <InteractivePage pages={pages} currentPage={currentPage} />
       {!nickname && <NicknameModal title={roomTitle} onClick={handleUpdateNickname} />}
       <ChatIcon onClick={() => setIsChatOpen(!isChatOpen)}>
         <CommentIcon className={classes.icon} />
       </ChatIcon>
+      <ShareIconWrapper onClick={copyUrlHelper}>
+        <Share />
+      </ShareIconWrapper>
       {isChatOpen && (
         <ChattingContainer>
           <ChattingRoom
@@ -149,6 +156,13 @@ const ChatIcon = styled.div`
   justify-content: center;
   align-items: center;
   border-radius: 50%;
+`;
+
+const ShareIconWrapper = styled.div`
+  position: fixed;
+  right: 140px;
+  bottom: 70px;
+  cursor:pointer;
 `;
 
 const ChattingContainer = styled.div`
