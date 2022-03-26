@@ -8,16 +8,16 @@ import { sixHatSelector } from '../../../redux/modules/sixHat';
 import { Title } from '../../common';
 
 type WaitingRoomProps = {
-  onClickSubmit?: () => void;
+  onClickSubmit?: (arg?: string) => void;
   onClickComplete?: () => void;
   onChange?: () => void;
 };
 
 const WaitingRoom = ({ onClickSubmit, onClickComplete, onChange }: WaitingRoomProps) => {
   const { isAdmin, subject } = useAppSelector(sixHatSelector);
-  const handleOnclickSubmit = () => {
+  const handleOnclickSubmit = (arg?: string) => {
     if (!onClickSubmit) return;
-    onClickSubmit();
+    onClickSubmit(arg);
   };
 
   const handleOnClickComplete = () => {

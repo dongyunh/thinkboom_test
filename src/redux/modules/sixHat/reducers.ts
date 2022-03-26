@@ -80,6 +80,7 @@ export const sixHatReducer = createReducer(initialState, builder => {
       state.chatHistory = [];
     })
     .addCase(getSubjectSH, (state, action) => {
+      console.log('여기는 리덕스 안에', action.payload);
       state.subject = action.payload;
     });
 });

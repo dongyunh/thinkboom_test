@@ -6,12 +6,11 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
 import { sixHatSelector } from '@redux/modules/sixHat';
 import { getSubjectRW } from '@redux/modules/randomWord/actions';
-import { getSubjectSH } from '@redux/modules/sixHat/actions';
 
 type SubjectTextFieldProps = {
   type?: 'randomWord' | 'sixHat';
   onChange?: (e: string) => void;
-  onClick?: () => void;
+  onClick?: (arg?: string) => void;
 };
 
 type StyledProps = {
@@ -31,9 +30,8 @@ const SubjectTextField = ({ type, onChange, onClick }: SubjectTextFieldProps) =>
     }
 
     if (type == 'sixHat') {
-      dispatch(getSubjectSH(subject));
       if (!onClick) return;
-      onClick();
+      onClick(subject);
     }
   };
 
@@ -42,7 +40,7 @@ const SubjectTextField = ({ type, onChange, onClick }: SubjectTextFieldProps) =>
       <TextFieldBox disabled={!isAdmin}>
         <TextField
           maxLength={28}
-          value={enteredSubject}
+          defaultValue={enteredSubject}
           disabled={!isAdmin}
           onChange={e => setSubject(e.target.value)}
         />

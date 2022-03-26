@@ -38,7 +38,6 @@ type SettingPageProps = {
 };
 
 let ConnectedSocket: any;
-// 52.78.192.124
 
 const SettingPage = ({ roomInfo }: SettingPageProps) => {
   const dispatch = useAppDispatch();
@@ -73,8 +72,8 @@ const SettingPage = ({ roomInfo }: SettingPageProps) => {
     dispatch(updateCurrentPage(pageNum));
   };
 
-  const handleSubmitSubject = () => {
-    ConnectedSocket.submitSubject(subject);
+  const handleSubmitSubject = (_subject?: string) => {
+    ConnectedSocket.submitSubject(_subject);
     dispatch(changeIsSubmitState(true));
   };
 
@@ -162,7 +161,7 @@ const ShareIconWrapper = styled.div`
   position: fixed;
   right: 140px;
   bottom: 70px;
-  cursor:pointer;
+  cursor: pointer;
 `;
 
 const ChattingContainer = styled.div`
