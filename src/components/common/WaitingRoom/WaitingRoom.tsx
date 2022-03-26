@@ -1,11 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
-import { HeaderBar } from '../HeaderBar';
-import { SubjectTextField } from '../SubjectTextField';
-import { PrimaryButton } from '../PrimaryButton';
 import { useAppSelector } from '../../../redux/hooks';
 import { sixHatSelector } from '../../../redux/modules/sixHat';
-import { Title } from '../../common';
+import {
+  Title,
+  PrimaryButton,
+  SubjectTextField,
+  HeaderBar,
+  CountingUser,
+} from '@components/common';
 
 type WaitingRoomProps = {
   onClickSubmit?: (arg?: string) => void;
@@ -33,7 +36,10 @@ const WaitingRoom = ({ onClickSubmit, onClickComplete, onChange }: WaitingRoomPr
   return (
     <>
       <HeaderBar>
-        <Title text="ThinkBoom" />
+        <>
+          <Title text="ThinkBoom" />
+          <CountingUser />
+        </>
       </HeaderBar>
       <Grid>
         <Empty />

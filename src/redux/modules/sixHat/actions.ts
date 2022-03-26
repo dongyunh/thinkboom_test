@@ -18,6 +18,7 @@ export const getMyHat = createAction<HatType>(`${prefix}/GET_MY_HAT`);
 export const getUserList = createAction<UserData>(`${prefix}/GET_USER_LIST`);
 export const getRandomHatList = createAction<UserList>(`${prefix}/GET_RANDOM_HAT_LIST`);
 export const clearChatHistory = createAction(`${prefix}/CLEAR_CHAT_HISTORY`);
+
 export const getSixHatResult = createAsyncThunk(`${prefix}/GET_SIX_HAT_RESULT`, async shRoomId => {
   const response = await axios.get(
     `${process.env.NEXT_PUBLIC_API_URL}/api/gallery/sixhat/${shRoomId}`,
