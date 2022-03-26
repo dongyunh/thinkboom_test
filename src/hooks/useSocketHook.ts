@@ -11,7 +11,7 @@ import {
   getRandomHatList,
   getSubjectSH,
 } from '../redux/modules/sixHat';
-import mixHatsHelper from '@utils/mixHatsHelper';
+import mixHatsHelper from '../utils/mixHatsHelper';
 import { toast } from 'react-toastify';
 
 import { UserList, UserData, HatType } from '@redux/modules/sixHat/types';

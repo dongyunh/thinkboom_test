@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { SelectHatBox } from '../SixHat';
 import { CenterLayout, PrimaryButton } from '../../common';
 import styled from 'styled-components';
-import { useAppSelector } from '@redux/hooks';
-import { selectSixHat } from '@redux/modules/sixHat';
+import { useAppSelector } from '../../../redux/hooks';
+import { selectSixHat } from '../../../redux/modules/sixHat';
 import { HatType, UserList } from '@redux/modules/sixHat/types';
-import useCheckSelectHat from '@hooks/useCheckSelectHat';
+import useCheckSelectHat from '../../../hooks/useCheckSelectHat';
 
 type SelectHatProps = {
   onClick?: (hat: HatType) => void;

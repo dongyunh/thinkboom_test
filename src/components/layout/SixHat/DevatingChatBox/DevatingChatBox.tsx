@@ -4,7 +4,7 @@ import { themedPalette } from '../../../../theme/styleTheme';
 import { Message, ChatTextField } from '../DevatingChatBox';
 import { sixHatSelector } from '../../../../redux/modules/sixHat';
 import { useAppSelector } from '../../../../redux/hooks';
-import { HatImage } from '@components/common';
+import { HatImage } from '../../../common';
 
 type DevatingChatBoxProps = {
   onClick: (arg: string) => void;

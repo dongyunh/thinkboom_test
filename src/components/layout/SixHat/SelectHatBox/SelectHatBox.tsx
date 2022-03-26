@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { themedPalette } from '../../../../theme/styleTheme';
 import { Card } from '../../../common';
-import { HatImage } from '@components/common';
+import { HatImage } from '../../../common';
 import hatData from '../../../../mock/hatData';
 import { UserList, HatType } from '@redux/modules/sixHat/types';
 

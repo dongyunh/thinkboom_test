@@ -1,5 +1,5 @@
-import { useAppSelector } from '@redux/hooks';
-import { selectDarkMode } from '@redux/modules/darkMode';
+import { useAppSelector } from '../redux/hooks';
+import { selectDarkMode } from '../redux/modules/darkMode';
 
 export function useTheme() {
   const darkModeState = useAppSelector(selectDarkMode);

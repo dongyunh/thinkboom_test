@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { themedPalette } from '../../../theme/styleTheme';
 import Dark from '../../../../public/asset/dark.png';
 import White from '../../../../public/asset/white.png';
-import { useToggleTheme } from '@hooks/useToggleTheme';
+import { useToggleTheme } from '../../../hooks/useToggleTheme';
 
 const DarkModeToggle = ({}) => {
   const [theme, toggle] = useToggleTheme();

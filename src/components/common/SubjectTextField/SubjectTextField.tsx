@@ -4,8 +4,8 @@ import styled from 'styled-components';
 import { themedPalette } from '../../../theme/styleTheme';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { useAppDispatch } from '../../../redux/hooks';
-import { getSubjectRW } from '@redux/modules/randomWord/actions';
-import { getSubjectSH } from '@redux/modules/sixHat/actions';
+import { getSubjectRW } from '../../../redux/modules/randomWord/actions';
+import { getSubjectSH } from '../../../redux/modules/sixHat/actions';
 
 type SubjectTextFieldProps = {
   type?: 'randomWord' | 'sixHat';

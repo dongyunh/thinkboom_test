@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useAppSelector } from '@redux/hooks';
-import { sixHatSelector } from '@redux/modules/sixHat';
+import { useAppSelector } from '../redux/hooks';
+import { sixHatSelector } from '../redux/modules/sixHat';
 
 const useCheckSelectHat = () => {
   const [isAllSelect, setIsAllSelect] = useState(false);

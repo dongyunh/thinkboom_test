@@ -20,7 +20,7 @@ import useSocketHook from '../../../src/hooks/useSocketHook';
 import { makeStyles } from '@mui/styles';
 import { HatType, UserList } from '@redux/modules/sixHat/types';
 import { ToastContainer } from 'react-toastify';
-import copyUrlHelper from '@utils/copyUrlHelper';
+import copyUrlHelper from '../../../src/utils/copyUrlHelper';
 
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -162,7 +162,7 @@ const ShareIconWrapper = styled.div`
   position: fixed;
   right: 140px;
   bottom: 70px;
-  cursor:pointer;
+  cursor: pointer;
 `;
 
 const ChattingContainer = styled.div`

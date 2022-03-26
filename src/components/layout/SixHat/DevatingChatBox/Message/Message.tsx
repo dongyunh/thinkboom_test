@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { themedPalette } from '../../../../../theme/styleTheme';
 const HatSrc = require('../../../../../../public/asset/hat.png');
 import { HatType } from '../../../../../redux/modules/sixHat/types';
-import { HatImage } from '@components/common';
+import { HatImage } from '../../../../common';
 
 type MessageProps = {
   isMe: boolean;
