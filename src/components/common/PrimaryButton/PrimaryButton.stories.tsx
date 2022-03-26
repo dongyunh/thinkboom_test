@@ -17,12 +17,12 @@ export default {
 const Template: ComponentStory<typeof PrimaryButton> = args => <PrimaryButton {...args} />;
 export const DefaultPrimaryButton = Template.bind({});
 DefaultPrimaryButton.args = {
-  buttonColor: 'gray',
+  // buttonColor: 'gray',
   text: '완료',
 };
 
 export const DefaultPrimaryButtonBlack = Template.bind({});
 DefaultPrimaryButtonBlack.args = {
-  buttonColor: 'black',
+  // buttonColor: 'black',
   text: '확인',
 };
