@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { ResultModal } from '../../common/Modals';
-import { Button } from '@mui/material';
 import { GetServerSideProps } from 'next';
 import { CenterLayout } from '@components/common';
 import styled from 'styled-components';

@@ -4,7 +4,7 @@ import { themedPalette } from '../../../../theme/styleTheme';
 import { Message, ChatTextField } from '../DevatingChatBox';
 import { sixHatSelector } from '../../../../redux/modules/sixHat';
 import { useAppSelector } from '../../../../redux/hooks';
-import { HatImage } from '@components/common';
+import { HatImage } from '../../../common';
 
 type DevatingChatBoxProps = {
   onClick: (arg: string) => void;
@@ -49,11 +49,11 @@ const DevatingChatBox = ({ onClick }: DevatingChatBoxProps) => {
         </UserListBox>
         <ChatViewBox>
           <MessageBox>
-            {chatHistory?.map(data => {
+            {chatHistory?.map((data, idx) => {
               if (data.hat) {
                 return (
                   <Message
-                    key={data.nickname}
+                    key={idx}
                     isMe={data.nickname === nickname}
                     message={data.message}
                     hatName={hatName[data.hat]}

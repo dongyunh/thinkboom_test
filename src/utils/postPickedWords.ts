@@ -7,8 +7,10 @@ type ResponseType = {
   };
 };
 
-export const postPickedWords = async (pickedWordList: string[]) => {
-  const response: ResponseType = await axios.post('http://52.78.192.124/randomWord', {
+export const postPickedWords = async (pickedWordList: string[], subject: string | null) => {
+  console.log(subject);
+  const response: ResponseType = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/randomWord`, {
+    subject: subject,
     wordList: pickedWordList,
   });
 

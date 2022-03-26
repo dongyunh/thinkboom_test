@@ -1,6 +1,6 @@
-import { useAppDispatch } from '@redux/hooks';
+import { useAppDispatch } from '../redux/hooks';
 import { useTheme } from './useTheme';
-import { enableDarkMode, enableLightMode } from '@redux/modules/darkMode';
+import { enableDarkMode, enableLightMode } from '../redux/modules/darkMode'
 
 export function useToggleTheme() {
   const dispatch = useAppDispatch();

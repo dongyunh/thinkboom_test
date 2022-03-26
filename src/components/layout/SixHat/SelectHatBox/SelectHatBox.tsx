@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { themedPalette } from '../../../../theme/styleTheme';
 import { Card } from '../../../common';
-import { HatImage } from '@components/common';
+import { HatImage } from '../../../common';
 import hatData from '../../../../mock/hatData';
 import { UserList, HatType } from '@redux/modules/sixHat/types';
 
@@ -48,7 +48,7 @@ const SelectHatBox = ({
           <UserListColumn>
             {userList.map((user, idx) => {
               return (
-                <UserProfile key={idx}>
+                <UserProfile key={user.nickname}>
                   {user.hat !== null && <HatImage type={user.hat} width={20} height={20} />}
                   <UserNickname>{user.nickname}</UserNickname>
                 </UserProfile>
@@ -127,6 +127,7 @@ const RandomButton = styled.button`
   right: 70px;
   border: none;
   border-radius: 12px;
+  cursor: pointer;
 `;
 
 const DownBox = styled.div`

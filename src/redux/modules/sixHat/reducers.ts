@@ -1,5 +1,5 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { Stats } from 'fs';
+
 import {
   updateCurrentPage,
   getNickname,
@@ -11,6 +11,7 @@ import {
   getUserList,
   getRandomHatList,
   clearChatHistory,
+  getSubjectSH,
 } from './actions';
 import { SixHatState } from './types';
 
@@ -50,9 +51,7 @@ export const sixHatReducer = createReducer(initialState, builder => {
     })
     .addCase(getUserHatInfo, (state, action) => {
       const { nickname, hat } = action.payload;
-      //닉네임만 뽑아낸 리스트
       const nicknameList = state.userList?.map(item => item.nickname);
-      console.log(nicknameList);
       const idx = nicknameList.indexOf(nickname);
       state.userList[idx].hat = hat;
     })
@@ -61,7 +60,6 @@ export const sixHatReducer = createReducer(initialState, builder => {
     })
     .addCase(getUserList, (state, action) => {
       if (state.userList.length === 0) {
-        console.log('실행?');
         state.userList.push(action.payload);
         return;
       }
@@ -80,6 +78,9 @@ export const sixHatReducer = createReducer(initialState, builder => {
     })
     .addCase(clearChatHistory, state => {
       state.chatHistory = [];
+    })
+    .addCase(getSubjectSH, (state, action) => {
+      state.subject = action.payload;
     });
 });
 
