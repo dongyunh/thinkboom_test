@@ -41,6 +41,7 @@ const SubjectTextField = ({ type, onChange, onClick }: SubjectTextFieldProps) =>
     <Card width={784} height={124}>
       <TextFieldBox disabled={!isAdmin}>
         <TextField
+          maxLength={28}
           value={enteredSubject}
           disabled={!isAdmin}
           onChange={e => setSubject(e.target.value)}
@@ -68,7 +69,7 @@ const TextFieldBox = styled.div<StyledProps>`
 const TextField = styled.input`
   width: 100%;
   box-sizing: border-box;
-  font-size: 18px;
+  font-size: 24px;
   height: 100%;
   background-color: transparent;
   border: none;
