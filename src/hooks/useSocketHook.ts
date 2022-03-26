@@ -85,6 +85,14 @@ export default function useSocketHook(type: 'sixhat' | 'brainwriting') {
               dispatch(getUserCount(userCount));
             }
 
+            if (response.type === 'QUIT') {
+              const userCount = {
+                totalUser: response.totalUser,
+                currentUser: response.currentUser,
+              };
+              dispatch(getUserCount(userCount));
+            }
+
             if (response.type === 'TALK') {
               const newMessage = {
                 nickname: response.sender,
@@ -124,6 +132,10 @@ export default function useSocketHook(type: 'sixhat' | 'brainwriting') {
           { senderId: this._senderId, category: 'SH' },
         );
       });
+    }
+
+    disConnect() {
+      this.StompClient.disconnect(() => {}, {});
     }
 
     // 웹소켓이 연결될 때 까지 실행하는 함수

@@ -51,6 +51,9 @@ const SettingPage = ({ roomInfo }: SettingPageProps) => {
       ConnectedSocket = new HandleSocket(`${process.env.NEXT_PUBLIC_API_URL}/websocket`);
       ConnectedSocket.connectSH(senderId, roomId);
     }
+    return () => {
+      ConnectedSocket.disConnect();
+    };
   }, [nickname]);
 
   const sendHatData = (hat: HatType) => {
