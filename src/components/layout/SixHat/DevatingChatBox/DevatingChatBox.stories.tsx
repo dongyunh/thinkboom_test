@@ -28,3 +28,4 @@
 //   userList: ['철수', '영희', '싸이', '진희', '영수', '명수'],
 //   messageData: messageData,
 // };
+export default 'xxx';
