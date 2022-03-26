@@ -161,7 +161,7 @@ const themeVariableSets: Record<Theme, ThemeVariables> = {
     box_complete: '#2B2C31',
     subject_button_disabled: '#616161',
     counting_user_bg: '#EEEEEE',
-    counting_user_text: '#A6A6A6',
+    counting_user_text: '#1B1B1B',
   },
 };
 
