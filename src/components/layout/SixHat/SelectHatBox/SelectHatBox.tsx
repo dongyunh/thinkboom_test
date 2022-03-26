@@ -5,6 +5,8 @@ import { Card } from '../../../common';
 import { HatImage } from '@components/common';
 import hatData from '../../../../mock/hatData';
 import { UserList, HatType } from '@redux/modules/sixHat/types';
+import { useAppSelector } from '@redux/hooks';
+import { sixHatSelector } from '@redux/modules/sixHat';
 
 type SelectHatBoxProps = {
   subject: string;
@@ -28,6 +30,7 @@ const SelectHatBox = ({
   onClickRandom,
 }: SelectHatBoxProps) => {
   const [isMouseOver, setIsMouseOver] = useState(false);
+  const { isAdmin } = useAppSelector(sixHatSelector);
 
   const handleOnClickHat = (hat: string) => {
     if (!onClickHat) return;
@@ -38,7 +41,7 @@ const SelectHatBox = ({
     <Container>
       <SubjectBox>
         {subject}
-        <RandomButton onClick={() => onClickRandom(userList)}>랜덤</RandomButton>
+        {isAdmin && <RandomButton onClick={() => onClickRandom(userList)}>랜덤</RandomButton>}
       </SubjectBox>
       <DownBox>
         <UserListBox>

@@ -12,6 +12,7 @@ import {
   getRandomHatList,
   clearChatHistory,
   getSubjectSH,
+  getSixHatResult,
 } from './actions';
 import { SixHatState } from './types';
 
@@ -82,6 +83,9 @@ export const sixHatReducer = createReducer(initialState, builder => {
     .addCase(getSubjectSH, (state, action) => {
       console.log('여기는 리덕스 안에', action.payload);
       state.subject = action.payload;
+    })
+    .addCase(getSixHatResult.fulfilled, (state, action) => {
+      console.log(action.payload);
     });
 });
 
