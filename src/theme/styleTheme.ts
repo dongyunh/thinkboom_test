@@ -46,6 +46,7 @@ type ThemeVariables = {
   box_subject: string;
   box_bg: string;
   box_complete: string;
+  subject_button_disabled: string;
 };
 
 type Theme = 'light' | 'dark';
@@ -101,6 +102,7 @@ const themeVariableSets: Record<Theme, ThemeVariables> = {
     box_subject: '#000000',
     box_bg: '#FFFFFF',
     box_complete: '#000000',
+    subject_button_disabled: '#616161',
   },
   dark: {
     bg_page1: '#1A1B1F',
@@ -150,6 +152,7 @@ const themeVariableSets: Record<Theme, ThemeVariables> = {
     box_subject: '#2B2C31',
     box_bg: '#45474A',
     box_complete: '#2B2C31',
+    subject_button_disabled: '#616161',
   },
 };
 
