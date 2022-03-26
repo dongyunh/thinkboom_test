@@ -25,6 +25,8 @@ export type SixHatResponseData = {
   message: string | null;
   randomHat: UserList;
   subject: string;
+  totalUser: number;
+  currentUser: number;
 };
 
 export type SixHatSendData = {
@@ -70,6 +72,7 @@ export default function useSocketHook(type: 'sixhat' | 'brainwriting') {
             const response: SixHatResponseData = JSON.parse(data.body) as SixHatResponseData;
 
             if (response.type === 'ENTER') {
+              console.log(response);
               const userData = {
                 nickname: response.sender,
                 hat: null,

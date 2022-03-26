@@ -19,5 +19,6 @@ export * from './Desc';
 export * from './DarkModeToggle';
 export * from './SkipButton';
 export * from './HatImage';
-export * from './ShareIcon';
+export * from './Icon/ShareIcon';
 export * from './CountingUser';
+export * from './Icon/ChatIcon';

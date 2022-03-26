@@ -1,7 +1,6 @@
 import React, { useState, useEffect, createContext } from 'react';
-import { useRouter } from 'next/router';
 import { GetServerSideProps } from 'next';
-import { InteractivePage, WaitingRoom, Share } from '../../../src/components/common';
+import { InteractivePage, WaitingRoom, Share, ChatIcon } from '../../../src/components/common';
 import { SelectHat, DevatingRoom } from '../../../src/components/layout/SixHat';
 import { useAppDispatch, useAppSelector } from '../../../src/redux/hooks';
 import {
@@ -14,7 +13,6 @@ import {
 } from '../../../src/redux/modules/sixHat';
 import { NicknameModal } from '../../../src/components/common';
 import { ChattingRoom } from '../../../src/components/common';
-import CommentIcon from '@mui/icons-material/Comment';
 import styled from 'styled-components';
 import useSocketHook from '../../../src/hooks/useSocketHook';
 import { makeStyles } from '@mui/styles';
@@ -122,9 +120,9 @@ const SettingPage = ({ roomInfo }: SettingPageProps) => {
       <ToastContainer position="bottom-left" autoClose={3000} theme="dark" />
       <InteractivePage pages={pages} currentPage={currentPage} />
       {!nickname && <NicknameModal title={roomTitle} onClick={handleUpdateNickname} />}
-      <ChatIcon onClick={() => setIsChatOpen(!isChatOpen)}>
-        <CommentIcon className={classes.icon} />
-      </ChatIcon>
+      <ChatWrapper onClick={() => setIsChatOpen(!isChatOpen)}>
+        <ChatIcon />
+      </ChatWrapper>
       <ShareIconWrapper onClick={copyUrlHelper}>
         <Share />
       </ShareIconWrapper>
@@ -143,18 +141,11 @@ const SettingPage = ({ roomInfo }: SettingPageProps) => {
 
 export default SettingPage;
 
-const ChatIcon = styled.div`
+const ChatWrapper = styled.div`
   position: fixed;
   right: 70px;
   bottom: 70px;
   cursor: pointer;
-  width: 50px;
-  height: 50px;
-  background-color: #c4c4c4;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 50%;
 `;
 
 const ShareIconWrapper = styled.div`
@@ -167,7 +158,7 @@ const ShareIconWrapper = styled.div`
 const ChattingContainer = styled.div`
   position: fixed;
   right: 70px;
-  bottom: 100px;
+  bottom: 130px;
 `;
 
 export const getServerSideProps: GetServerSideProps = async context => {
