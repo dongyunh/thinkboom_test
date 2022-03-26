@@ -1,22 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
 import { themedPalette } from '../../../../../theme/styleTheme';
-const HatSrc = require('../../../../../../public/asset/hat.png');
 import { HatType } from '../../../../../redux/modules/sixHat/types';
 import { HatImage } from '@components/common';
 
 type MessageProps = {
-  isMe: boolean;
   message: string | null;
   hatName: string | null;
   hat: HatType;
 };
 
-type StyleProps = {
-  isMe: boolean;
-};
-
-const Message = ({ isMe, message, hatName, hat }: MessageProps) => {
+const Message = ({ message, hatName, hat }: MessageProps) => {
   return (
     <OtherMessageBox>
       <ProfileBox>
@@ -27,14 +21,6 @@ const Message = ({ isMe, message, hatName, hat }: MessageProps) => {
     </OtherMessageBox>
   );
 };
-
-const MessageBox = styled.div<StyleProps>`
-  width: 100%;
-  display: flex;
-  justify-content: ${props => (props.isMe ? `flex-end` : 'flex-start')};
-  align-items: flex-start;
-  margin-bottom: 16px;
-`;
 
 const OtherMessageBox = styled.div`
   display: flex;
@@ -62,7 +48,5 @@ const Box = styled.div`
   align-items: center;
   max-width: 406px;
 `;
-
-const MyMessageBox = styled.div``;
 
 export { Message };

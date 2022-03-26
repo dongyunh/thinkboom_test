@@ -41,7 +41,7 @@ let ConnectedSocket: any;
 
 const SettingPage = ({ roomInfo }: SettingPageProps) => {
   const dispatch = useAppDispatch();
-  const { currentPage, nickname, chatHistory, senderId, subject } = useAppSelector(sixHatSelector);
+  const { currentPage, nickname, chatHistory, senderId } = useAppSelector(sixHatSelector);
 
   const [isChatOpen, setIsChatOpen] = useState(false);
   const HandleSocket = useSocketHook('sixhat');
