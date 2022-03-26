@@ -30,3 +30,4 @@
 //   chatHistory: messageData,
 //   myNickname: '코끼리귀여워',
 // };
+export default 'xxx';
