@@ -38,7 +38,6 @@ type SettingPageProps = {
 };
 
 let ConnectedSocket: any;
-// 52.78.192.124
 
 const SettingPage = ({ roomInfo }: SettingPageProps) => {
   const dispatch = useAppDispatch();

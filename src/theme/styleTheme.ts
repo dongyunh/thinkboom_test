@@ -29,6 +29,7 @@ type ThemeVariables = {
   toggle_bg: string;
   dropdown_list_hover: string;
   modal_button_normal: string;
+  modal_gray_button_normal: string;
   modal_button_hover: string;
   modal_button_disabled: string;
   card_bg_normal: string;
@@ -85,6 +86,7 @@ const themeVariableSets: Record<Theme, ThemeVariables> = {
     toggle_bg: '#FFFFFF',
     dropdown_list_hover: '#1B1818',
     modal_button_normal: '#1B1818',
+    modal_gray_button_normal: '#424242',
     modal_button_hover: '#383838',
     modal_button_disabled: '#EEEEEE',
     card_bg_normal: '#FFFFFF',
@@ -135,6 +137,7 @@ const themeVariableSets: Record<Theme, ThemeVariables> = {
     toggle_bg: '#1B1B1B',
     dropdown_list_hover: '#2B2C31',
     modal_button_normal: '#EEEEEE',
+    modal_gray_button_normal: '#424242',
     modal_button_hover: '#050505',
     modal_button_disabled: '#45474A',
     card_bg_normal: '#45474A',
