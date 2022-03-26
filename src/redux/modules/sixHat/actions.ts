@@ -1,5 +1,5 @@
 import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
-import { ChatData, UserData, HatType, UserList } from './types';
+import { ChatData, UserData, HatType, UserList, UserCount } from './types';
 import axios from 'axios';
 type GetNicknameArgType = {
   shRoomId: string;
@@ -18,6 +18,7 @@ export const getMyHat = createAction<HatType>(`${prefix}/GET_MY_HAT`);
 export const getUserList = createAction<UserData>(`${prefix}/GET_USER_LIST`);
 export const getRandomHatList = createAction<UserList>(`${prefix}/GET_RANDOM_HAT_LIST`);
 export const clearChatHistory = createAction(`${prefix}/CLEAR_CHAT_HISTORY`);
+export const getUserCount = createAction<UserCount>(`${prefix}/GET_TOTAL_USER_COUNT`);
 
 export const getSixHatResult = createAsyncThunk(`${prefix}/GET_SIX_HAT_RESULT`, async shRoomId => {
   const response = await axios.get(

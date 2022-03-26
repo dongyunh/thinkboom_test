@@ -17,7 +17,7 @@ type WaitingRoomProps = {
 };
 
 const WaitingRoom = ({ onClickSubmit, onClickComplete, onChange }: WaitingRoomProps) => {
-  const { isAdmin, subject } = useAppSelector(sixHatSelector);
+  const { isAdmin, subject, userCount } = useAppSelector(sixHatSelector);
   const handleOnclickSubmit = (arg?: string) => {
     if (!onClickSubmit) return;
     onClickSubmit(arg);
@@ -38,7 +38,7 @@ const WaitingRoom = ({ onClickSubmit, onClickComplete, onChange }: WaitingRoomPr
       <HeaderBar>
         <>
           <Title text="ThinkBoom" />
-          <CountingUser />
+          <CountingUser totalUser={userCount.totalUser} currentUser={userCount.currentUser} />
         </>
       </HeaderBar>
       <Grid>

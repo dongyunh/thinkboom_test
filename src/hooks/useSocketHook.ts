@@ -10,6 +10,7 @@ import {
   sixHatSelector,
   getRandomHatList,
   getSubjectSH,
+  getUserCount,
 } from '../redux/modules/sixHat';
 import mixHatsHelper from '@utils/mixHatsHelper';
 import { toast } from 'react-toastify';
@@ -72,12 +73,16 @@ export default function useSocketHook(type: 'sixhat' | 'brainwriting') {
             const response: SixHatResponseData = JSON.parse(data.body) as SixHatResponseData;
 
             if (response.type === 'ENTER') {
-              console.log(response);
               const userData = {
                 nickname: response.sender,
                 hat: null,
               };
+              const userCount = {
+                totalUser: response.totalUser,
+                currentUser: response.currentUser,
+              };
               dispatch(getUserList(userData));
+              dispatch(getUserCount(userCount));
             }
 
             if (response.type === 'TALK') {
