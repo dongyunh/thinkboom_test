@@ -37,6 +37,7 @@ const StyledCard = styled.div<StyleProps>`
   border-radius: 18px;
   position: relative;
   transition: 0.2s ease-in-out;
+  overflow: hidden;
 
   :hover {
     transform: translate(8px, 8px);
