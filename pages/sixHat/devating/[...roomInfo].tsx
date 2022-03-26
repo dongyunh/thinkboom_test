@@ -1,6 +1,6 @@
 import React, { useState, useEffect, createContext } from 'react';
 import { GetServerSideProps } from 'next';
-import { InteractivePage, WaitingRoom, Share, ChatIcon } from '../../../src/components/common';
+import { InteractivePage, WaitingRoom, ShareIcon, ChatIcon } from '../../../src/components/common';
 import { SelectHat, DevatingRoom } from '../../../src/components/layout/SixHat';
 import { useAppDispatch, useAppSelector } from '../../../src/redux/hooks';
 import {
@@ -127,7 +127,7 @@ const SettingPage = ({ roomInfo }: SettingPageProps) => {
         <ChatIcon />
       </ChatWrapper>
       <ShareIconWrapper onClick={copyUrlHelper}>
-        <Share />
+        <ShareIcon />
       </ShareIconWrapper>
       {isChatOpen && (
         <ChattingContainer>
