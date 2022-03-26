@@ -22,5 +22,5 @@ const Template: ComponentStory<typeof SelectHatBox> = args => <SelectHatBox {...
 export const DefaultSelectHatBox = Template.bind({});
 DefaultSelectHatBox.args = {
   subject: '저녁에 뭐먹을까요?',
-  userList: ['철수', '영희', '싸이', '진희', '영수', '명수'],
+  // userList: ['철수', '영희', '싸이', '진희', '영수', '명수'],
 };
