@@ -6,6 +6,9 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { persistStore } from 'redux-persist';
 import { HeaderBar, Title, DarkModeToggle } from '@components/common';
 import Link from 'next/link';
+import Image from 'next/image';
+import Logo from '../public/asset/Logo.png';
+import styled from 'styled-components';
 
 let persistor = persistStore(store);
 
@@ -20,7 +23,7 @@ function MyApp({ Component, pageProps }: AppProps) {
             <>
               <Link href="/">
                 <a>
-                  <Title text="ThinkBoom" />
+                  <Image src={Logo} width="300" height="" />
                 </a>
               </Link>
               <DarkModeToggle />
