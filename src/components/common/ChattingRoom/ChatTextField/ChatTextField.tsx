@@ -21,7 +21,7 @@ const ChatTextField = ({}) => {
   return (
     <TextFieldContainer>
       <TextField
-        value={content}
+        value={content || ''}
         onChange={e => setContent(e.target.value)}
         onKeyPress={e => onKeyPress(e)}
       />
