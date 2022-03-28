@@ -15,6 +15,11 @@ export type UserList = UserData[];
 
 export type ChatHistoryType = ChatData[];
 
+export type UserCount = {
+  totalUser: number;
+  currentUser: number;
+};
+
 export type SixHatState = {
   currentPage: number;
   nickname: string | null;
@@ -25,4 +30,5 @@ export type SixHatState = {
   subject?: string;
   userList: UserList;
   myHat: HatType;
+  userCount: UserCount;
 };

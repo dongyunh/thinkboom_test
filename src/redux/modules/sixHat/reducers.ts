@@ -12,6 +12,8 @@ import {
   getRandomHatList,
   clearChatHistory,
   getSubjectSH,
+  getSixHatResult,
+  getUserCount,
 } from './actions';
 import { SixHatState } from './types';
 
@@ -25,6 +27,10 @@ const initialState: SixHatState = {
   subject: undefined,
   userList: [],
   myHat: 'red',
+  userCount: {
+    totalUser: 0,
+    currentUser: 0,
+  },
 };
 
 //createReducer로 reducer 생성.
@@ -81,6 +87,12 @@ export const sixHatReducer = createReducer(initialState, builder => {
     })
     .addCase(getSubjectSH, (state, action) => {
       state.subject = action.payload;
+    })
+    .addCase(getSixHatResult.fulfilled, (state, action) => {
+      console.log(action.payload);
+    })
+    .addCase(getUserCount, (state, action) => {
+      state.userCount = action.payload;
     });
 });
 

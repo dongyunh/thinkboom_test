@@ -15,6 +15,8 @@ const SixHat = () => {
   };
 
   const handleMoveSettingPage = (title: string | null, roomId: number) => {
+    console.log(title);
+    console.log(roomId);
     router.push(`/sixHat/devating/${title}/${roomId}`);
   };
 
