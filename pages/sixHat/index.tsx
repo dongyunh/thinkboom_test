@@ -15,7 +15,7 @@ const SixHat = () => {
   };
 
   const handleMoveSettingPage = (title: string | null, roomId: number) => {
-    router.push(`/sixHat/devating/${title}/${roomId}`);
+    router.push(`/sixHat/debating/${title}/${roomId}`);
   };
 
   const handleUpdateAmdinState = () => {

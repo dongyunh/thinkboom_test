@@ -72,9 +72,9 @@ export default function useSocketHook(type: 'sixhat' | 'brainwriting') {
             const response: SixHatResponseData = JSON.parse(data.body) as SixHatResponseData;
 
             if (response.type === 'ENTER') {
-              const userData = {
+              const userData: UserData = {
                 nickname: response.sender,
-                hat: null,
+                hat: 'none',
               };
               const userCount = {
                 totalUser: response.totalUser,

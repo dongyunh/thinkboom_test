@@ -26,7 +26,7 @@ const initialState: SixHatState = {
   chatHistory: [],
   subject: undefined,
   userList: [],
-  myHat: 'red',
+  myHat: 'none',
   userCount: {
     totalUser: 0,
     currentUser: 0,

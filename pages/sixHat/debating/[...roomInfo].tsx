@@ -1,6 +1,12 @@
 import React, { useState, useEffect, createContext } from 'react';
 import { GetServerSideProps } from 'next';
-import { InteractivePage, WaitingRoom, ShareIcon, ChatIcon } from '../../../src/components/common';
+import {
+  InteractivePage,
+  WaitingRoom,
+  ShareIcon,
+  ChatIcon,
+  TutorialIcon,
+} from '../../../src/components/common';
 import { SelectHat, DevatingRoom } from '../../../src/components/layout/SixHat';
 import { useAppDispatch, useAppSelector } from '../../../src/redux/hooks';
 import {
@@ -15,18 +21,11 @@ import { NicknameModal, LimitModal } from '../../../src/components/common';
 import { ChattingRoom } from '../../../src/components/common';
 import styled from 'styled-components';
 import useSocketHook from '../../../src/hooks/useSocketHook';
-import { makeStyles } from '@mui/styles';
 import { HatType, UserList } from '@redux/modules/sixHat/types';
 import { ToastContainer } from 'react-toastify';
 import copyUrlHelper from '@utils/copyUrlHelper';
 
 import 'react-toastify/dist/ReactToastify.css';
-
-const useStyles = makeStyles({
-  icon: {
-    color: '#FFFFFF',
-  },
-});
 
 //TODO : any 수정하기
 export const WaitingRoomContext = createContext<any>(null);
@@ -45,7 +44,7 @@ const SettingPage = ({ roomInfo }: SettingPageProps) => {
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [isFull, setIsFull] = useState(userCount.currentUser / userCount.totalUser);
   const [roomTitle, roomId] = roomInfo;
-  
+
   const HandleSocket = useSocketHook('sixhat');
 
   useEffect(() => {
@@ -133,13 +132,17 @@ const SettingPage = ({ roomInfo }: SettingPageProps) => {
       {!nickname && isFull !== 1 && (
         <NicknameModal title={roomTitle} onClick={handleUpdateNickname} />
       )}
-      {isFull === 1 && <LimitModal />}
-      <ChatWrapper onClick={() => setIsChatOpen(!isChatOpen)}>
-        <ChatIcon />
-      </ChatWrapper>
+      {/* {isFull === 1 && <LimitModal />} */}
       <ShareIconWrapper onClick={copyUrlHelper}>
         <ShareIcon />
       </ShareIconWrapper>
+      <ChatWrapper onClick={() => setIsChatOpen(!isChatOpen)}>
+        <ChatIcon />
+      </ChatWrapper>
+      <TutorialIconWrapper>
+        <TutorialIcon type="sixHat" />
+      </TutorialIconWrapper>
+
       {isChatOpen && (
         <ChattingContainer>
           <ChattingRoom
@@ -157,14 +160,21 @@ export default SettingPage;
 
 const ChatWrapper = styled.div`
   position: fixed;
-  right: 70px;
+  right: 140px;
   bottom: 70px;
   cursor: pointer;
 `;
 
 const ShareIconWrapper = styled.div`
   position: fixed;
-  right: 140px;
+  right: 210px;
+  bottom: 70px;
+  cursor: pointer;
+`;
+
+const TutorialIconWrapper = styled.div`
+  position: fixed;
+  right: 70px;
   bottom: 70px;
   cursor: pointer;
 `;
