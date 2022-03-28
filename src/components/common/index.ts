@@ -22,3 +22,4 @@ export * from './HatImage';
 export * from './Icon/ShareIcon';
 export * from './CountingUser';
 export * from './Icon/ChatIcon';
+export * from './Modals/LimitModal';

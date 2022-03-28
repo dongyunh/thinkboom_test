@@ -11,7 +11,7 @@ import {
   getMyHat,
   clearChatHistory,
 } from '../../../src/redux/modules/sixHat';
-import { NicknameModal } from '../../../src/components/common';
+import { NicknameModal, LimitModal } from '../../../src/components/common';
 import { ChattingRoom } from '../../../src/components/common';
 import styled from 'styled-components';
 import useSocketHook from '../../../src/hooks/useSocketHook';
@@ -52,7 +52,9 @@ const SettingPage = ({ roomInfo }: SettingPageProps) => {
       ConnectedSocket.connectSH(senderId, roomId);
     }
     return () => {
-      ConnectedSocket.disConnect();
+      if (ConnectedSocket) {
+        ConnectedSocket.disConnect();
+      }
     };
   }, [nickname]);
 
@@ -123,6 +125,7 @@ const SettingPage = ({ roomInfo }: SettingPageProps) => {
       <ToastContainer position="bottom-left" autoClose={3000} theme="dark" />
       <InteractivePage pages={pages} currentPage={currentPage} />
       {!nickname && <NicknameModal title={roomTitle} onClick={handleUpdateNickname} />}
+      <LimitModal />
       <ChatWrapper onClick={() => setIsChatOpen(!isChatOpen)}>
         <ChatIcon />
       </ChatWrapper>
