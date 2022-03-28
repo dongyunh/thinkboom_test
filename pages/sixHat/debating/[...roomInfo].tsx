@@ -1,6 +1,12 @@
 import React, { useState, useEffect, createContext } from 'react';
 import { GetServerSideProps } from 'next';
-import { InteractivePage, WaitingRoom, ShareIcon, ChatIcon } from '../../../src/components/common';
+import {
+  InteractivePage,
+  WaitingRoom,
+  ShareIcon,
+  ChatIcon,
+  TutorialIcon,
+} from '../../../src/components/common';
 import { SelectHat, DevatingRoom } from '../../../src/components/layout/SixHat';
 import { useAppDispatch, useAppSelector } from '../../../src/redux/hooks';
 import {
@@ -126,13 +132,17 @@ const SettingPage = ({ roomInfo }: SettingPageProps) => {
       {!nickname && isFull !== 1 && (
         <NicknameModal title={roomTitle} onClick={handleUpdateNickname} />
       )}
-      {isFull === 1 && <LimitModal />}
-      <ChatWrapper onClick={() => setIsChatOpen(!isChatOpen)}>
-        <ChatIcon />
-      </ChatWrapper>
+      {/* {isFull === 1 && <LimitModal />} */}
       <ShareIconWrapper onClick={copyUrlHelper}>
         <ShareIcon />
       </ShareIconWrapper>
+      <ChatWrapper onClick={() => setIsChatOpen(!isChatOpen)}>
+        <ChatIcon />
+      </ChatWrapper>
+      <TutorialIconWrapper>
+        <TutorialIcon type="sixHat" />
+      </TutorialIconWrapper>
+
       {isChatOpen && (
         <ChattingContainer>
           <ChattingRoom
@@ -150,14 +160,21 @@ export default SettingPage;
 
 const ChatWrapper = styled.div`
   position: fixed;
-  right: 70px;
+  right: 140px;
   bottom: 70px;
   cursor: pointer;
 `;
 
 const ShareIconWrapper = styled.div`
   position: fixed;
-  right: 140px;
+  right: 210px;
+  bottom: 70px;
+  cursor: pointer;
+`;
+
+const TutorialIconWrapper = styled.div`
+  position: fixed;
+  right: 70px;
   bottom: 70px;
   cursor: pointer;
 `;
