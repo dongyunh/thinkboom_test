@@ -16,7 +16,7 @@ const Result = ({ shRoomId }: ResultProps) => {
 
   const handleComplete = () => {
     setIsOpen(false);
-    router.push('/');
+    router.replace('/');
   };
 
   const handleCancel = () => {
