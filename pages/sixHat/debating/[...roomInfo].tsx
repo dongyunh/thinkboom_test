@@ -11,7 +11,7 @@ import {
   getMyHat,
   clearChatHistory,
 } from '../../../src/redux/modules/sixHat';
-import { NicknameModal } from '../../../src/components/common';
+import { NicknameModal, LimitModal } from '../../../src/components/common';
 import { ChattingRoom } from '../../../src/components/common';
 import styled from 'styled-components';
 import useSocketHook from '../../../src/hooks/useSocketHook';
@@ -39,12 +39,18 @@ let ConnectedSocket: any;
 
 const SettingPage = ({ roomInfo }: SettingPageProps) => {
   const dispatch = useAppDispatch();
-  const { currentPage, nickname, chatHistory, senderId } = useAppSelector(sixHatSelector);
+  const { currentPage, nickname, chatHistory, senderId, userCount } =
+    useAppSelector(sixHatSelector);
 
   const [isChatOpen, setIsChatOpen] = useState(false);
-  const HandleSocket = useSocketHook('sixhat');
-  const classes = useStyles();
+  const [isFull, setIsFull] = useState(userCount.currentUser / userCount.totalUser);
   const [roomTitle, roomId] = roomInfo;
+  
+  const HandleSocket = useSocketHook('sixhat');
+
+  useEffect(() => {
+    setIsFull(userCount.currentUser / userCount.totalUser);
+  }, [userCount]);
 
   useEffect(() => {
     if (nickname) {
@@ -52,7 +58,9 @@ const SettingPage = ({ roomInfo }: SettingPageProps) => {
       ConnectedSocket.connectSH(senderId, roomId);
     }
     return () => {
-      ConnectedSocket.disConnect();
+      if (ConnectedSocket) {
+        ConnectedSocket.disConnect();
+      }
     };
   }, [nickname]);
 
@@ -122,7 +130,10 @@ const SettingPage = ({ roomInfo }: SettingPageProps) => {
     <WaitingRoomContext.Provider value={contextValue}>
       <ToastContainer position="bottom-left" autoClose={3000} theme="dark" />
       <InteractivePage pages={pages} currentPage={currentPage} />
-      {!nickname && <NicknameModal title={roomTitle} onClick={handleUpdateNickname} />}
+      {!nickname && isFull !== 1 && (
+        <NicknameModal title={roomTitle} onClick={handleUpdateNickname} />
+      )}
+      {isFull === 1 && <LimitModal />}
       <ChatWrapper onClick={() => setIsChatOpen(!isChatOpen)}>
         <ChatIcon />
       </ChatWrapper>
