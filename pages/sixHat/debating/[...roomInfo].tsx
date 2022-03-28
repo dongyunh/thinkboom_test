@@ -77,7 +77,7 @@ const SettingPage = ({ roomInfo }: SettingPageProps) => {
   };
 
   const handleNextPage = (pageNum: number) => {
-    dispatch(updateCurrentPage(pageNum));
+    ConnectedSocket.sendCurrentPage(pageNum);
   };
 
   const handleSubmitSubject = (_subject?: string) => {
