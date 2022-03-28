@@ -12,6 +12,7 @@ import My_Green from '../../../../public/asset/hats/hat_green_chat.png';
 import My_Red from '../../../../public/asset/hats/hat_red_chat.png';
 import My_White from '../../../../public/asset/hats/hat_white_chat.png';
 import My_Black from '../../../../public/asset/hats/hat_black_chat.png';
+import Null_Hat from '../../../../public/asset/hats/hat_null.png';
 
 import { HatType } from '@redux/modules/sixHat/types';
 
@@ -22,24 +23,30 @@ type HatImageProps = {
   isMe?: boolean;
 };
 
+type HatImageType = {
+  [key in HatType]: any;
+};
+
 const HatImage = ({ type, width, height, isMe }: HatImageProps) => {
   const hatSrc = (type: HatType, _isMe?: boolean) => {
-    const hatType = {
+    const hatType: HatImageType = {
       white: White,
       red: Red,
       black: Black,
       blue: Blue,
       green: Green,
       yellow: Yellow,
+      none: Null_Hat,
     };
 
-    const myHatType = {
+    const myHatType: HatImageType = {
       white: My_White,
       red: My_Red,
       black: My_Black,
       blue: My_Blue,
       green: My_Green,
       yellow: My_Yellow,
+      none: Null_Hat,
     };
 
     return _isMe ? myHatType[type] : hatType[type];
