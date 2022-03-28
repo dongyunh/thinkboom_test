@@ -1,23 +1,26 @@
 import React from 'react';
 import styled from 'styled-components';
-import { HeaderBar } from '../HeaderBar';
-import { SubjectTextField } from '../SubjectTextField';
-import { PrimaryButton } from '../PrimaryButton';
 import { useAppSelector } from '../../../redux/hooks';
 import { sixHatSelector } from '../../../redux/modules/sixHat';
-import { Title } from '../../common';
+import {
+  Title,
+  PrimaryButton,
+  SubjectTextField,
+  HeaderBar,
+  CountingUser,
+} from '@components/common';
 
 type WaitingRoomProps = {
-  onClickSubmit?: () => void;
+  onClickSubmit?: (arg?: string) => void;
   onClickComplete?: () => void;
   onChange?: () => void;
 };
 
 const WaitingRoom = ({ onClickSubmit, onClickComplete, onChange }: WaitingRoomProps) => {
-  const { isAdmin, subject } = useAppSelector(sixHatSelector);
-  const handleOnclickSubmit = () => {
+  const { isAdmin, subject, userCount } = useAppSelector(sixHatSelector);
+  const handleOnclickSubmit = (arg?: string) => {
     if (!onClickSubmit) return;
-    onClickSubmit();
+    onClickSubmit(arg);
   };
 
   const handleOnClickComplete = () => {
@@ -33,7 +36,10 @@ const WaitingRoom = ({ onClickSubmit, onClickComplete, onChange }: WaitingRoomPr
   return (
     <>
       <HeaderBar>
-        <Title text="ThinkBoom" />
+        <>
+          <Title text="ThinkBoom" />
+          <CountingUser totalUser={userCount.totalUser} currentUser={userCount.currentUser} />
+        </>
       </HeaderBar>
       <Grid>
         <Empty />

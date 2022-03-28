@@ -1,87 +1,52 @@
-import React, { useLayoutEffect, useState } from 'react';
-import ReactDOM from 'react-dom';
+import React, { useState } from 'react';
+import { Modal } from '../Modal/Modal';
+import { Button } from '../../../common';
 import styled from 'styled-components';
-import { Button } from '@mui/material';
 
 type ResultModalProps = {
-  onClickBtn1?: () => void;
-  onClickBtn2?: () => void;
+  onClickBtn1: () => void;
+  onClickBtn2: () => void;
 };
 
-function ResultModal({ onClickBtn1, onClickBtn2 }: ResultModalProps) {
-  const [container] = useState(() => {
-    const modalRoot = document.createElement('div');
-    modalRoot.setAttribute('id', 'ResultModal');
-    return modalRoot;
-  });
-
-  useLayoutEffect(() => {
-    const root = document.getElementById('modal_root');
-    if (!root) {
-      return;
-    }
-    root.appendChild(container);
-    return () => {
-      root.removeChild(container);
-    };
-  }, []);
-
-  const handleOnClick = () => {
-    if (!onClickBtn1) return;
-    onClickBtn1();
-  };
-
-  const handleOnClick2 = () => {
-    if (!onClickBtn2) return;
-    onClickBtn2();
-  };
-
-  return ReactDOM.createPortal(
-    <>
-      <S_ModalOverlay />
-      <S_ModalWrapper>
-        <h1>공유하시겠습니까?</h1>
+const ResultModal = ({ onClickBtn1, onClickBtn2 }: ResultModalProps) => {
+  return (
+    <Modal>
+      <MakeRoomContainer>
+        <TitleWrapper>
+          <Desc>
+            저희 서비스에서의 작업물은 기본적으로 갤러리에 공유됩니다. 원치 않으시는 경우에는 공유를
+            취소하실 수 있습니다. <br />
+            <br /> 작업물을 공유하시겠습니까?
+          </Desc>
+        </TitleWrapper>
         <ButtonWrapper>
-          <Button variant="outlined" onClick={handleOnClick}>
-            공유하지 않기
-          </Button>
-          <Button variant="contained" onClick={handleOnClick}>
-            확인
-          </Button>
+          <Button color="gray" text="공유하지 않기" onClick={onClickBtn1} />
+          <Button text="공유하기" onClick={onClickBtn2} />
         </ButtonWrapper>
-      </S_ModalWrapper>
-    </>,
-    container,
+      </MakeRoomContainer>
+    </Modal>
   );
-}
+};
 
-const S_ModalOverlay = styled.div`
-  background: rgba(0, 0, 0, 0.6);
-  height: 100vh;
-  left: 0;
-  position: fixed;
-  top: 0;
-  width: 100vw;
-`;
-
-const S_ModalWrapper = styled.div`
+const MakeRoomContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: white;
-  border-radius: 16px;
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-  position: fixed;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  width: auto;
-  min-width: 480px;
-  max-width: 560px;
-  z-index: 99;
+  padding: 30px 40px;
+  box-sizing: border-box;
+  width: 100%;
+`;
+
+const Desc = styled.p`
+  font-size: 22px;
+`;
+
+const TitleWrapper = styled.div`
+  padding-bottom: 30px;
 `;
 
 const ButtonWrapper = styled.div`
+  width: 100%;
   display: flex;
   gap: 10px;
 `;

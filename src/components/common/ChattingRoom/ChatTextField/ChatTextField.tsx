@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import styled from 'styled-components';
 import { themedPalette } from '../../../../theme';
-import { WaitingRoomContext } from '../../../../../pages/sixHat/devating/[...roomInfo]';
+import { WaitingRoomContext } from '../../../../../pages/sixHat/debating/[...roomInfo]';
 
 const ChatTextField = ({}) => {
   const [content, setContent] = useState<string>();

@@ -16,7 +16,7 @@ const Grid = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 50px 0px;
+  padding: 50px 0px 0px 0px;
 `;
 
 export { CenterLayout };
