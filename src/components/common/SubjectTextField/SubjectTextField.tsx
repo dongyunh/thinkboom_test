@@ -11,15 +11,16 @@ type SubjectTextFieldProps = {
   type?: 'randomWord' | 'sixHat';
   onChange?: (e: string) => void;
   onClick?: (arg?: string) => void;
+  isAdmin?: boolean;
 };
 
 type StyledProps = {
   disabled: boolean;
 };
 
-const SubjectTextField = ({ type, onChange, onClick }: SubjectTextFieldProps) => {
+const SubjectTextField = ({ type, onChange, onClick, isAdmin = true }: SubjectTextFieldProps) => {
   const dispatch = useAppDispatch();
-  const { isAdmin, subject: enteredSubject } = useAppSelector(sixHatSelector);
+  const { subject: enteredSubject } = useAppSelector(sixHatSelector);
   const [subject, setSubject] = useState<string>('');
 
   const handleGetSubject = () => {

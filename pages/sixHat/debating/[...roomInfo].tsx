@@ -15,18 +15,11 @@ import { NicknameModal, LimitModal } from '../../../src/components/common';
 import { ChattingRoom } from '../../../src/components/common';
 import styled from 'styled-components';
 import useSocketHook from '../../../src/hooks/useSocketHook';
-import { makeStyles } from '@mui/styles';
 import { HatType, UserList } from '@redux/modules/sixHat/types';
 import { ToastContainer } from 'react-toastify';
 import copyUrlHelper from '@utils/copyUrlHelper';
 
 import 'react-toastify/dist/ReactToastify.css';
-
-const useStyles = makeStyles({
-  icon: {
-    color: '#FFFFFF',
-  },
-});
 
 //TODO : any 수정하기
 export const WaitingRoomContext = createContext<any>(null);
@@ -45,7 +38,7 @@ const SettingPage = ({ roomInfo }: SettingPageProps) => {
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [isFull, setIsFull] = useState(userCount.currentUser / userCount.totalUser);
   const [roomTitle, roomId] = roomInfo;
-  
+
   const HandleSocket = useSocketHook('sixhat');
 
   useEffect(() => {
