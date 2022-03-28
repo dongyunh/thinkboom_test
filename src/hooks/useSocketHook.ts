@@ -3,7 +3,6 @@ import SockJS from 'sockjs-client';
 import Stomp from 'stompjs';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import {
-  updateAdminState,
   getMessages,
   getUserHatInfo,
   getUserList,
@@ -135,7 +134,10 @@ export default function useSocketHook(type: 'sixhat' | 'brainwriting') {
     }
 
     disConnect() {
-      this.StompClient.disconnect(() => {}, {});
+      this.StompClient.disconnect(() => {}, {
+        senderId: this._senderId,
+        category: 'SH',
+      });
     }
 
     // 웹소켓이 연결될 때 까지 실행하는 함수
