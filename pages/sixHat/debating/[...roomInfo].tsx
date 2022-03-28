@@ -129,10 +129,10 @@ const SettingPage = ({ roomInfo }: SettingPageProps) => {
     <WaitingRoomContext.Provider value={contextValue}>
       <ToastContainer position="bottom-left" autoClose={3000} theme="dark" />
       <InteractivePage pages={pages} currentPage={currentPage} />
-      {!nickname && isFull !== 1 && (
+      {!nickname && isFull <= 1 && (
         <NicknameModal title={roomTitle} onClick={handleUpdateNickname} />
       )}
-      {/* {isFull === 1 && <LimitModal />} */}
+      {isFull > 1 && <LimitModal />}
       <ShareIconWrapper onClick={copyUrlHelper}>
         <ShareIcon />
       </ShareIconWrapper>

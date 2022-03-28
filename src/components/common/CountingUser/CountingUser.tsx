@@ -29,7 +29,7 @@ const CountingUser = ({ totalUser = 5, currentUser = 2, userList }: CountingUser
       <TouchArea onMouseOver={handleOnMouseOver} onMouseOut={handleOnMouseOut} />
       <Image src={UserCount} width={25} height={25} />
       <Count>
-        {currentUser}/{totalUser}
+        {currentUser > totalUser ? totalUser : currentUser}/{totalUser}
       </Count>
       {isOpen && (
         <UserListBox>
