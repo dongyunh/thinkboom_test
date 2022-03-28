@@ -37,7 +37,7 @@ const SubjectTextField = ({ type, onChange, onClick, isAdmin = true }: SubjectTe
   };
 
   return (
-    <Card width={784} height={124}>
+    <Card width={600} height={124}>
       <TextFieldBox disabled={!isAdmin}>
         <TextField
           maxLength={28}
