@@ -46,13 +46,13 @@ const SelectHatBox = ({
       <DownBox>
         <UserListBox>
           <MyHatBox>
-            <HatImage type={myHat} width={80} height={80} />
+            <HatImage isMe={true} type={myHat} width={100} height={100} />
           </MyHatBox>
           <UserListColumn>
             {userList.map((user, idx) => {
               return (
                 <UserProfile key={user.nickname}>
-                  {user.hat !== null && <HatImage type={user.hat} width={20} height={20} />}
+                  {user.hat !== null && <HatImage type={user.hat} width={25} height={25} />}
                   <UserNickname>{user.nickname}</UserNickname>
                 </UserProfile>
               );
@@ -75,7 +75,7 @@ const SelectHatBox = ({
                   </HatBox>
                 ) : (
                   <HatBox>
-                    <HatImage type={hat.value} width={100} />
+                    <HatImage type={hat.value} width={120} height={120} />
                     <div>{hat.text}</div>
                     <TouchArea
                       onMouseOver={() => setIsMouseOver(true)}

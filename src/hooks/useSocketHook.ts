@@ -3,13 +3,13 @@ import SockJS from 'sockjs-client';
 import Stomp from 'stompjs';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import {
-  updateAdminState,
   getMessages,
   getUserHatInfo,
   getUserList,
   sixHatSelector,
   getRandomHatList,
   getSubjectSH,
+  getUserCount,
 } from '../redux/modules/sixHat';
 import mixHatsHelper from '@utils/mixHatsHelper';
 import { toast } from 'react-toastify';
@@ -25,6 +25,8 @@ export type SixHatResponseData = {
   message: string | null;
   randomHat: UserList;
   subject: string;
+  totalUser: number;
+  currentUser: number;
 };
 
 export type SixHatSendData = {
@@ -74,7 +76,20 @@ export default function useSocketHook(type: 'sixhat' | 'brainwriting') {
                 nickname: response.sender,
                 hat: null,
               };
+              const userCount = {
+                totalUser: response.totalUser,
+                currentUser: response.currentUser,
+              };
               dispatch(getUserList(userData));
+              dispatch(getUserCount(userCount));
+            }
+
+            if (response.type === 'QUIT') {
+              const userCount = {
+                totalUser: response.totalUser,
+                currentUser: response.currentUser,
+              };
+              dispatch(getUserCount(userCount));
             }
 
             if (response.type === 'TALK') {
@@ -115,6 +130,13 @@ export default function useSocketHook(type: 'sixhat' | 'brainwriting') {
           },
           { senderId: this._senderId, category: 'SH' },
         );
+      });
+    }
+
+    disConnect() {
+      this.StompClient.disconnect(() => {}, {
+        senderId: this._senderId,
+        category: 'SH',
       });
     }
 
