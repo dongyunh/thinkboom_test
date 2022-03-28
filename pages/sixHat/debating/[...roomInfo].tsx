@@ -39,12 +39,18 @@ let ConnectedSocket: any;
 
 const SettingPage = ({ roomInfo }: SettingPageProps) => {
   const dispatch = useAppDispatch();
-  const { currentPage, nickname, chatHistory, senderId } = useAppSelector(sixHatSelector);
+  const { currentPage, nickname, chatHistory, senderId, userCount } =
+    useAppSelector(sixHatSelector);
 
   const [isChatOpen, setIsChatOpen] = useState(false);
-  const HandleSocket = useSocketHook('sixhat');
-  const classes = useStyles();
+  const [isFull, setIsFull] = useState(userCount.currentUser / userCount.totalUser);
   const [roomTitle, roomId] = roomInfo;
+  
+  const HandleSocket = useSocketHook('sixhat');
+
+  useEffect(() => {
+    setIsFull(userCount.currentUser / userCount.totalUser);
+  }, [userCount]);
 
   useEffect(() => {
     if (nickname) {
@@ -124,8 +130,10 @@ const SettingPage = ({ roomInfo }: SettingPageProps) => {
     <WaitingRoomContext.Provider value={contextValue}>
       <ToastContainer position="bottom-left" autoClose={3000} theme="dark" />
       <InteractivePage pages={pages} currentPage={currentPage} />
-      {!nickname && <NicknameModal title={roomTitle} onClick={handleUpdateNickname} />}
-      <LimitModal />
+      {!nickname && isFull !== 1 && (
+        <NicknameModal title={roomTitle} onClick={handleUpdateNickname} />
+      )}
+      {isFull === 1 && <LimitModal />}
       <ChatWrapper onClick={() => setIsChatOpen(!isChatOpen)}>
         <ChatIcon />
       </ChatWrapper>
