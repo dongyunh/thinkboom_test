@@ -28,6 +28,7 @@ export class HandleSocket {
     this._roomId = null;
     this._senderId = null;
   }
+ 
 
   connectSH(senderId: number | null, roomId: string) {
     this._senderId = senderId;

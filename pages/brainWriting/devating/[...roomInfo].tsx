@@ -5,13 +5,16 @@ import { InteractivePage, WaitingRoom, Share } from '../../../src/components/com
 import { SelectHat, DevatingRoom } from '../../../src/components/layout/SixHat';
 import { useAppDispatch, useAppSelector } from '../../../src/redux/hooks';
 import {
-  updateCurrentPage,
   changeIsSubmitState,
   sixHatSelector,
-  getNickname,
   getMyHat,
   clearChatHistory,
 } from '../../../src/redux/modules/sixHat';
+import {
+  getNickname,
+  updateCurrentPage,
+  brainWritingSelector,
+} from '../../../src/redux/modules/brainWriting';
 import { NicknameModal } from '../../../src/components/common';
 import { ChattingRoom } from '../../../src/components/common';
 import CommentIcon from '@mui/icons-material/Comment';
@@ -31,7 +34,7 @@ const useStyles = makeStyles({
 });
 
 //TODO : any 수정하기
-export const WaitingRoomContext = createContext<any>(null);
+export const BWWaitingRoomContext = createContext<any>(null);
 
 type SettingPageProps = {
   roomInfo: string[];
@@ -42,10 +45,11 @@ let ConnectedSocket: any;
 
 const SettingPage = ({ roomInfo }: SettingPageProps) => {
   const dispatch = useAppDispatch();
-  const { currentPage, nickname, chatHistory, senderId, subject } = useAppSelector(sixHatSelector);
+  const { currentPage, nickname, senderId, chatHistory } = useAppSelector(brainWritingSelector);
+  console.log(senderId);
 
   const [isChatOpen, setIsChatOpen] = useState(false);
-  const HandleSocket = useSocketHook('sixhat');
+  const HandleSocket = useSocketHook('brainwriting');
   const classes = useStyles();
   const [roomTitle, roomId] = roomInfo;
   console.log(roomInfo);
@@ -53,7 +57,7 @@ const SettingPage = ({ roomInfo }: SettingPageProps) => {
   useEffect(() => {
     if (nickname) {
       ConnectedSocket = new HandleSocket(`${process.env.NEXT_PUBLIC_API_URL}/websocket`);
-      ConnectedSocket.connectSH(senderId, roomId);
+      ConnectedSocket.connectBW(senderId, roomId);
     }
   }, [nickname]);
 
@@ -62,8 +66,8 @@ const SettingPage = ({ roomInfo }: SettingPageProps) => {
     dispatch(getMyHat(hat));
   };
 
-  const sendMessage = (message: string) => {
-    ConnectedSocket.sendMessage(nickname, message);
+  const BWsendMessage = (message: string) => {
+    ConnectedSocket.BWsendMessage(nickname, message);
   };
 
   const handelSendDevatingMessage = (message: string) => {
@@ -80,7 +84,7 @@ const SettingPage = ({ roomInfo }: SettingPageProps) => {
   };
 
   const handleUpdateNickname = async (enteredName: string) => {
-    dispatch(getNickname({ shRoomId: roomId, nickname: enteredName }));
+    dispatch(getNickname({ bwRoomId: roomId, nickname: enteredName }));
   };
 
   const handleSendRandomHat = (userHatList: UserList) => {
@@ -116,11 +120,11 @@ const SettingPage = ({ roomInfo }: SettingPageProps) => {
   ];
 
   const contextValue = {
-    sendMessage,
+    BWsendMessage,
   };
 
   return (
-    <WaitingRoomContext.Provider value={contextValue}>
+    <BWWaitingRoomContext.Provider value={contextValue}>
       <ToastContainer position="bottom-left" autoClose={3000} theme="dark" />
       <InteractivePage pages={pages} currentPage={currentPage} />
       {!nickname && <NicknameModal title={roomTitle} onClick={handleUpdateNickname} />}
@@ -139,7 +143,7 @@ const SettingPage = ({ roomInfo }: SettingPageProps) => {
           />
         </ChattingContainer>
       )}
-    </WaitingRoomContext.Provider>
+    </BWWaitingRoomContext.Provider>
   );
 };
 

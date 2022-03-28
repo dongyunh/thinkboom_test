@@ -30,6 +30,7 @@ export const getNickname = createAsyncThunk(
         nickname: nickname,
       },
     );
-    return response.data;
+    return response.data
+
   },
 );

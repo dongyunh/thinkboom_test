@@ -2,9 +2,10 @@ import React, { useState, useContext } from 'react';
 import styled from 'styled-components';
 import { themedPalette } from '../../../../theme';
 import { WaitingRoomContext } from '../../../../../pages/sixHat/devating/[...roomInfo]';
+import { BWWaitingRoomContext } from '../../../../../pages/brainWriting/devating/[...roomInfo]';
 
 const ChatTextField = ({}) => {
-  const [content, setContent] = useState<string>();
+  const [content, setContent] = useState<string>('');
   const { sendMessage } = useContext(WaitingRoomContext);
 
   const handleSendMessage = () => {

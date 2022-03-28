@@ -1,23 +1,27 @@
 import React, { useEffect } from 'react';
 import { InteractivePage, StartPage, MakeRoomModal } from '../../src/components/common';
 import { useAppDispatch, useAppSelector } from '@redux/hooks';
-import { updateCurrentPage, sixHatSelector, updateAdminState } from '@redux/modules/sixHat';
+import {
+  updateCurrentPage,
+  brainWritingSelector,
+  updateAdminState,
+} from '@redux/modules/brainWriting';
 import { useRouter } from 'next/router';
 import axios from 'axios';
 
-const SixHat = () => {
+const BrainWriting = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
-  const { currentPage } = useAppSelector(sixHatSelector);
+  const { currentPage } = useAppSelector(brainWritingSelector);
 
   const handleNextPage = (pageNum: number) => {
     dispatch(updateCurrentPage(pageNum));
   };
 
-  const handleMoveSettingPage = (title: string | null, roomId: number) => {
+  const handleMoveSettingPage = (title: string | null, roomId: string) => {
     console.log(title);
     console.log(roomId);
-    router.push(`/sixHat/devating/${title}/${roomId}`);
+    router.push(`/brainWriting/devating/${title}/${roomId}`);
   };
 
   const handleUpdateAmdinState = () => {
@@ -25,12 +29,17 @@ const SixHat = () => {
   };
 
   // TODO : 서버 주소 나오면 api 한곳에 모으기, 비동기 작업들 리덕스로 옮기기
-  const handleMakeNewPage = async (title: string | null, headCount: number, timer: number) => {
+  const handleMakeNewPage = async (title: string | null, headCount: number, time: number) => {
     await axios
-      .post(`${process.env.NEXT_PUBLIC_API_URL}/api/sixHat/rooms`, { title, headCount, timer })
+      .post(`${process.env.NEXT_PUBLIC_API_URL}/api/brainwriting/rooms`, {
+        title,
+        headCount,
+        time,
+      })
       .then(res => {
-        const { shRoomId } = res.data;
-        handleMoveSettingPage(title, shRoomId);
+        console.log(res);
+        const { roomId } = res.data;
+        handleMoveSettingPage(title, roomId);
         handleUpdateAmdinState();
       });
   };
@@ -45,9 +54,9 @@ const SixHat = () => {
     {
       component: (
         <StartPage
-          pageType="sixhat"
-          title="6가지 모자"
-          desc="여섯가지 색상의 모자가 지닌 역할에 맞춰 생각함으로써 다양한 측면에서 폭넓은 사고를 할 수 있도록 도와주는 기법입니다."
+          pageType="brainwriting"
+          title="브레인라이팅"
+          desc="각자 주제에 대해 생각나는 아이디어들을 적은 뒤 서로 돌려가며 아이디어를 공유 및 투표합니다."
           onClick={() => handleNextPage(1)}
         />
       ),
@@ -60,7 +69,7 @@ const SixHat = () => {
   return <InteractivePage pages={pages} currentPage={currentPage} />;
 };
 
-export default SixHat;
+export default BrainWriting;
 
 /*
 TODO : 1.이 페이제에서 나갈 때, currentPage 0으로 초기화하기 

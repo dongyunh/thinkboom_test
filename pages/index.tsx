@@ -41,7 +41,7 @@ const Home: NextPage = () => {
                 <Desc text="1인용" />
               </CardContent>
             </Main.Card>
-            <Main.Card width={315} height={400}>
+            <Main.Card width={315} height={400} onMouseUp={() => router.push('/brainWriting')}>
               <CardContent>
                 <Title text="브레인 라이팅" />
                 <Desc text="다양한 의견을 공유하고 싶다면?" />
