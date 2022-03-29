@@ -17,11 +17,12 @@ import {
   getMyHat,
   clearChatHistory,
 } from '../../../src/redux/modules/sixHat';
-import { NicknameModal, LimitModal } from '../../../src/components/common';
+import { NicknameModal, LimitModal, RoutingAlertModal } from '../../../src/components/common';
 import { ChattingRoom } from '../../../src/components/common';
 import styled from 'styled-components';
 import useSocketHook from '../../../src/hooks/useSocketHook';
 import { HatType, UserList } from '@redux/modules/sixHat/types';
+import { selectPermit } from '@redux/modules/permit';
 import { ToastContainer } from 'react-toastify';
 import copyUrlHelper from '@utils/copyUrlHelper';
 
@@ -40,6 +41,7 @@ const SettingPage = ({ roomInfo }: SettingPageProps) => {
   const dispatch = useAppDispatch();
   const { currentPage, nickname, chatHistory, senderId, userCount, myHat } =
     useAppSelector(sixHatSelector);
+  const { isRoutingModalOpen } = useAppSelector(selectPermit);
 
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [isFull, setIsFull] = useState(0);
@@ -139,6 +141,7 @@ const SettingPage = ({ roomInfo }: SettingPageProps) => {
         <NicknameModal title={roomTitle} onClick={handleUpdateNickname} />
       )}
       {isFull > 1 && <LimitModal />}
+      {isRoutingModalOpen && <RoutingAlertModal />}
       <ShareIconWrapper onClick={copyUrlHelper}>
         <ShareIcon />
       </ShareIconWrapper>
