@@ -49,10 +49,10 @@ const SelectHatBox = ({
             <HatImage isMe={true} type={myHat} width={100} height={100} />
           </MyHatBox>
           <UserListColumn>
-            {userList.map((user, idx) => {
+            {userList.map(user => {
               return (
                 <UserProfile key={user.nickname}>
-                  {user.hat !== null && <HatImage type={user.hat} width={25} height={25} />}
+                  <HatImage type={user.hat} width={25} height={25} />
                   <UserNickname>{user.nickname}</UserNickname>
                 </UserProfile>
               );

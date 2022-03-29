@@ -21,7 +21,7 @@ const Result = ({ rwId }: ResultProps) => {
 
   const handleConfirm = () => {
     setIsOpen(false);
-    router.push('/');
+    router.replace('/');
   };
 
   const handleDontShare = () => {

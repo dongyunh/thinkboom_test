@@ -9,15 +9,17 @@ import {
   sixHatSelector,
   getRandomHatList,
   getSubjectSH,
-  getUserCount,
+  updateCurrentPage,
 } from '../redux/modules/sixHat';
+import { getUserCount } from '../redux/modules/CountUser';
+
 import mixHatsHelper from '@utils/mixHatsHelper';
 import { toast } from 'react-toastify';
 
 import { UserList, UserData, HatType } from '@redux/modules/sixHat/types';
 
 export type SixHatResponseData = {
-  type: 'ENTER' | 'TALK' | 'HAT' | 'QUIT' | 'SUBJECT' | 'RANDOMHAT' | 'DEBATING';
+  type: 'ENTER' | 'TALK' | 'HAT' | 'QUIT' | 'SUBJECT' | 'RANDOMHAT' | 'DEBATING' | 'NEXTPAGE';
   roomId: string | null;
   sender: string;
   senderId: number | null;
@@ -27,10 +29,11 @@ export type SixHatResponseData = {
   subject: string;
   totalUser: number;
   currentUser: number;
+  currentPage: number;
 };
 
 export type SixHatSendData = {
-  type: 'ENTER' | 'TALK' | 'HAT' | 'QUIT' | 'SUBJECT' | 'RANDOMHAT' | 'DEBATING';
+  type: 'ENTER' | 'TALK' | 'HAT' | 'QUIT' | 'SUBJECT' | 'RANDOMHAT' | 'DEBATING' | 'NEXTPAGE';
   roomId: string | null;
   sender: string | null;
   senderId: number | null;
@@ -38,6 +41,7 @@ export type SixHatSendData = {
   message: string | null;
   randomHat?: UserList;
   subject?: string;
+  currentPage?: number;
 };
 
 export default function useSocketHook(type: 'sixhat' | 'brainwriting') {
@@ -72,9 +76,9 @@ export default function useSocketHook(type: 'sixhat' | 'brainwriting') {
             const response: SixHatResponseData = JSON.parse(data.body) as SixHatResponseData;
 
             if (response.type === 'ENTER') {
-              const userData = {
+              const userData: UserData = {
                 nickname: response.sender,
-                hat: null,
+                hat: 'none',
               };
               const userCount = {
                 totalUser: response.totalUser,
@@ -111,7 +115,6 @@ export default function useSocketHook(type: 'sixhat' | 'brainwriting') {
             }
 
             if (response.type === 'SUBJECT') {
-              console.log('되돌아온 주제', response.subject);
               dispatch(getSubjectSH(response.subject));
               toast.info('주제가 공유되었습니다');
             }
@@ -126,6 +129,10 @@ export default function useSocketHook(type: 'sixhat' | 'brainwriting') {
 
             if (response.type === 'RANDOMHAT') {
               dispatch(getRandomHatList(response.randomHat));
+            }
+
+            if (response.type === 'NEXTPAGE') {
+              dispatch(updateCurrentPage(response.currentPage));
             }
           },
           { senderId: this._senderId, category: 'SH' },
@@ -242,6 +249,24 @@ export default function useSocketHook(type: 'sixhat' | 'brainwriting') {
           hat: null,
           message: null,
           subject: subject,
+        };
+        this.send(data);
+      } catch (e) {
+        console.log('message 소켓 함수 에러', e);
+      }
+    };
+
+    sendCurrentPage = (pageNum: number) => {
+      try {
+        // send할 데이터
+        const data: SixHatSendData = {
+          type: 'NEXTPAGE',
+          roomId: this._roomId,
+          sender: null,
+          senderId: this._senderId,
+          hat: null,
+          message: null,
+          currentPage: pageNum,
         };
         this.send(data);
       } catch (e) {

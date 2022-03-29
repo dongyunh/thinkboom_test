@@ -34,37 +34,32 @@ const WaitingRoom = ({ onClickSubmit, onClickComplete, onChange }: WaitingRoomPr
   };
 
   return (
-    <>
-      <HeaderBar>
-        <>
-          <Title text="ThinkBoom" />
-          <CountingUser totalUser={userCount.totalUser} currentUser={userCount.currentUser} />
-        </>
-      </HeaderBar>
-      <Grid>
-        <Empty />
-        <TextFieldWrapper>
-          <Title text="회의 주제" />
-          <SubjectTextField type="sixHat" onChange={handleOnChange} onClick={handleOnclickSubmit} />
-        </TextFieldWrapper>
-        <PrimaryButton
-          text="완료"
-          onClick={handleOnClickComplete}
-          disabled={!(subject && isAdmin)}
+    <Grid>
+      <Empty />
+      <TextFieldWrapper>
+        <Title text="회의 주제" />
+        <SubjectTextField
+          isAdmin={isAdmin}
+          type="sixHat"
+          onChange={handleOnChange}
+          onClick={handleOnclickSubmit}
         />
-      </Grid>
-    </>
+      </TextFieldWrapper>
+      <PrimaryButton text="완료" onClick={handleOnClickComplete} disabled={!(subject && isAdmin)} />
+      <BackGroundImage />
+    </Grid>
   );
 };
 
 const Grid = styled.div`
-  width: 100%;
+  width: 100vw;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
   padding: 50px 0px;
+  position: relative;
 `;
 
 const TextFieldWrapper = styled.div`
@@ -72,6 +67,16 @@ const TextFieldWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 20px;
+`;
+
+const BackGroundImage = styled.div`
+  width: 110vw;
+  height: 100vh;
+  background-image: url('/asset/subject_background.png');
+  background-size: cover;
+  position: absolute;
+  z-index: -10;
+  bottom: 110px;
 `;
 
 const Empty = styled.div``;
