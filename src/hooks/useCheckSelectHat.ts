@@ -8,7 +8,7 @@ const useCheckSelectHat = () => {
 
   useEffect(() => {
     const hatList = userList.map(user => user.hat);
-    if (hatList.includes(null)) setIsAllSelect(false);
+    if (hatList.includes('none')) setIsAllSelect(false);
     else setIsAllSelect(true);
   }, [userList]);
 
