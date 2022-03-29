@@ -63,7 +63,7 @@ const StyledIdea = styled.div`
 `;
 
 const StyledInput = styled.textarea`
-  height: 22%;
+  height: 15%;
   width: 82%;
   background-color: ${themedPalette.component_2};
   border: 5px solid ${themedPalette.border_1};

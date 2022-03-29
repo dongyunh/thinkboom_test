@@ -9,7 +9,7 @@ import {
   HeaderBar,
   CountingUser,
 } from '@components/common';
-
+import { brainWritingSelector } from '../../../redux/modules/brainWriting/selectors';
 type WaitingRoomProps = {
   onClickSubmit?: (arg?: string) => void;
   onClickComplete?: () => void;
@@ -18,6 +18,7 @@ type WaitingRoomProps = {
 
 const WaitingRoom = ({ onClickSubmit, onClickComplete, onChange }: WaitingRoomProps) => {
   const { isAdmin, subject, userCount } = useAppSelector(sixHatSelector);
+  const { BWisAdmin, BWisSubmit } = useAppSelector(brainWritingSelector);
   const handleOnclickSubmit = (arg?: string) => {
     if (!onClickSubmit) return;
     onClickSubmit(arg);
@@ -45,7 +46,11 @@ const WaitingRoom = ({ onClickSubmit, onClickComplete, onChange }: WaitingRoomPr
           onClick={handleOnclickSubmit}
         />
       </TextFieldWrapper>
-      <PrimaryButton text="완료" onClick={handleOnClickComplete} disabled={!(subject && isAdmin)} />
+      <PrimaryButton
+        text="완료"
+        onClick={handleOnClickComplete}
+        disabled={!(subject && isAdmin) && !(BWisAdmin && BWisSubmit)}
+      />
       <BackGroundImage />
     </Grid>
   );
