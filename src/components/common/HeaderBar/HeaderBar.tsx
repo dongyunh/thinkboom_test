@@ -6,10 +6,12 @@ import Image from 'next/image';
 import Logo from '../../../../public/asset/Logo.png';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useAppSelector } from '@redux/hooks';
+import { useAppSelector, useAppDispatch } from '@redux/hooks';
 import { selectUserCount } from '@redux/modules/CountUser';
+import { selectPermit, setRoutingModalOpen } from '@redux/modules/permit';
 
 const HeaderBar = () => {
+  const dispatch = useAppDispatch();
   const router = useRouter();
   const { userCount } = useAppSelector(selectUserCount);
 
@@ -28,13 +30,17 @@ const HeaderBar = () => {
     }
   };
 
+  const handleRouting = () => {
+    if (router.pathname.includes('/sixHat/debating/')) {
+      dispatch(setRoutingModalOpen(true));
+    } else {
+      router.push('/');
+    }
+  };
+
   return (
     <StyledHeaderBar>
-      <Link href="/">
-        <a>
-          <Image src={Logo} width="300" height="" />
-        </a>
-      </Link>
+      <Image src={Logo} width="300" height="" onClick={handleRouting} />
       {showCpntCheckPathName()}
     </StyledHeaderBar>
   );

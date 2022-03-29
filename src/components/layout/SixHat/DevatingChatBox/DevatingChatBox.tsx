@@ -26,6 +26,7 @@ const DevatingChatBox = ({ onClick }: DevatingChatBoxProps) => {
     black: '검정모자',
     yellow: '노란모자',
     green: '초록모자',
+    none: '',
   };
 
   return (
@@ -34,13 +35,15 @@ const DevatingChatBox = ({ onClick }: DevatingChatBoxProps) => {
       <DownBox>
         <UserListBox>
           <MyHatBox>
-            <HatImage type={myHat} width={70} height={70} />
+            <HatImage isMe={true} type={myHat} width={70} height={70} />
           </MyHatBox>
           <UserList>
             {userList.map(user => {
               return (
                 <UserProfile key={user.nickname}>
-                  {user.hat !== null && <HatImage type={user.hat} width={20} height={20} />}
+                  {user.hat !== null && (
+                    <HatImage isMe={true} type={user.hat} width={20} height={20} />
+                  )}
                   <User>{user.nickname}</User>
                 </UserProfile>
               );
@@ -56,7 +59,7 @@ const DevatingChatBox = ({ onClick }: DevatingChatBoxProps) => {
                     key={idx}
                     isMe={data.nickname === nickname}
                     message={data.message}
-                    hatName={hatName[data.hat]}
+                    nickname={data.nickname}
                     hat={data.hat}
                   />
                 );
@@ -139,9 +142,7 @@ const UserProfile = styled.div`
   padding-top: 10px;
 `;
 
-const User = styled.div`
-  margin-bottom: 8px;
-`;
+const User = styled.div``;
 
 const MessageBox = styled.div`
   display: flex;
