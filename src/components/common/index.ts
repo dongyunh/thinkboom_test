@@ -24,3 +24,4 @@ export * from './Icon/TutorialIcon';
 export * from './Modals/MakeRoomModal';
 export * from './Modals/NicknameModal';
 export * from './Modals/LimitModal';
+export * from './Modals/RoutingAlertModal';

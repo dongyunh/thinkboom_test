@@ -26,6 +26,7 @@ const Result = ({ rwId }: ResultProps) => {
 
   const handleDontShare = () => {
     axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/randomWord/share/${rwId}`);
+    router.replace('/');
   };
 
   useEffect(() => {
