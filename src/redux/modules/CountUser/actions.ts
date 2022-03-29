@@ -5,3 +5,4 @@ import { UserCount } from './types';
 const prefix = 'count_user';
 
 export const getUserCount = createAction<UserCount>(`${prefix}/GET_USER_COUNT`);
+export const getUserList = createAction(`${prefix}/GET_USER_LIST`);
