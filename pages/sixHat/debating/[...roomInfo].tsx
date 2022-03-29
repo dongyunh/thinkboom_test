@@ -142,9 +142,11 @@ const SettingPage = ({ roomInfo }: SettingPageProps) => {
       <ShareIconWrapper onClick={copyUrlHelper}>
         <ShareIcon />
       </ShareIconWrapper>
-      <ChatWrapper onClick={() => setIsChatOpen(!isChatOpen)}>
-        <ChatIcon />
-      </ChatWrapper>
+      {currentPage !== 2 && (
+        <ChatWrapper onClick={() => setIsChatOpen(!isChatOpen)}>
+          <ChatIcon />
+        </ChatWrapper>
+      )}
       <TutorialIconWrapper>
         <TutorialIcon type="sixHat" />
       </TutorialIconWrapper>
@@ -166,14 +168,14 @@ export default SettingPage;
 
 const ChatWrapper = styled.div`
   position: fixed;
-  right: 140px;
+  right: 210px;
   bottom: 70px;
   cursor: pointer;
 `;
 
 const ShareIconWrapper = styled.div`
   position: fixed;
-  right: 210px;
+  right: 140px;
   bottom: 70px;
   cursor: pointer;
 `;
