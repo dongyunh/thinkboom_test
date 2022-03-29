@@ -7,6 +7,7 @@ import {
   getSubjectRW,
   getResultWord,
 } from './actions';
+import { PURGE } from 'redux-persist';
 
 export type RandomWordState = {
   currentPage: number;
@@ -59,5 +60,8 @@ export const randomWordReducer = createReducer(initialState, builder => {
     .addCase(getResultWord.fulfilled, (state, { payload }) => {
       state.pending = false;
       state.pickedWordList = payload;
+    })
+    .addCase(PURGE, state => {
+      return initialState;
     });
 });

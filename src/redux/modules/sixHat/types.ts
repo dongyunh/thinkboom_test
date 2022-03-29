@@ -1,4 +1,4 @@
-export type HatType = 'red' | 'blue' | 'black' | 'green' | 'yellow' | 'white';
+export type HatType = 'red' | 'blue' | 'black' | 'green' | 'yellow' | 'white' | 'none';
 
 export type ChatData = {
   nickname: string | null;
@@ -8,7 +8,7 @@ export type ChatData = {
 
 export type UserData = {
   nickname: string;
-  hat: HatType | null;
+  hat: HatType;
 };
 
 export type UserList = UserData[];

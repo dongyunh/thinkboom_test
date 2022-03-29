@@ -16,6 +16,7 @@ import {
   getUserCount,
 } from './actions';
 import { SixHatState } from './types';
+import { PURGE } from 'redux-persist';
 
 const initialState: SixHatState = {
   currentPage: 0,
@@ -26,7 +27,7 @@ const initialState: SixHatState = {
   chatHistory: [],
   subject: undefined,
   userList: [],
-  myHat: 'red',
+  myHat: 'none',
   userCount: {
     totalUser: 0,
     currentUser: 0,
@@ -93,6 +94,9 @@ export const sixHatReducer = createReducer(initialState, builder => {
     })
     .addCase(getUserCount, (state, action) => {
       state.userCount = action.payload;
+    })
+    .addCase(PURGE, state => {
+      return initialState;
     });
 });
 

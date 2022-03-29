@@ -1,6 +1,12 @@
 import React, { useState, useEffect, createContext } from 'react';
 import { GetServerSideProps } from 'next';
-import { InteractivePage, WaitingRoom, ShareIcon, ChatIcon } from '../../../src/components/common';
+import {
+  InteractivePage,
+  WaitingRoom,
+  ShareIcon,
+  ChatIcon,
+  TutorialIcon,
+} from '../../../src/components/common';
 import { SelectHat, DevatingRoom } from '../../../src/components/layout/SixHat';
 import { useAppDispatch, useAppSelector } from '../../../src/redux/hooks';
 import {
@@ -15,18 +21,11 @@ import { NicknameModal, LimitModal } from '../../../src/components/common';
 import { ChattingRoom } from '../../../src/components/common';
 import styled from 'styled-components';
 import useSocketHook from '../../../src/hooks/useSocketHook';
-import { makeStyles } from '@mui/styles';
 import { HatType, UserList } from '@redux/modules/sixHat/types';
 import { ToastContainer } from 'react-toastify';
 import copyUrlHelper from '@utils/copyUrlHelper';
 
 import 'react-toastify/dist/ReactToastify.css';
-
-const useStyles = makeStyles({
-  icon: {
-    color: '#FFFFFF',
-  },
-});
 
 //TODO : any 수정하기
 export const WaitingRoomContext = createContext<any>(null);
@@ -43,13 +42,18 @@ const SettingPage = ({ roomInfo }: SettingPageProps) => {
     useAppSelector(sixHatSelector);
 
   const [isChatOpen, setIsChatOpen] = useState(false);
-  const [isFull, setIsFull] = useState(userCount.currentUser / userCount.totalUser);
+  const [isFull, setIsFull] = useState(0);
   const [roomTitle, roomId] = roomInfo;
-  
+
   const HandleSocket = useSocketHook('sixhat');
 
   useEffect(() => {
-    setIsFull(userCount.currentUser / userCount.totalUser);
+    if (userCount.totalUser !== 0) {
+      setIsFull(userCount.currentUser / userCount.totalUser);
+    }
+    return () => {
+      setIsFull(0);
+    };
   }, [userCount]);
 
   useEffect(() => {
@@ -78,7 +82,7 @@ const SettingPage = ({ roomInfo }: SettingPageProps) => {
   };
 
   const handleNextPage = (pageNum: number) => {
-    dispatch(updateCurrentPage(pageNum));
+    ConnectedSocket.sendCurrentPage(pageNum);
   };
 
   const handleSubmitSubject = (_subject?: string) => {
@@ -125,21 +129,26 @@ const SettingPage = ({ roomInfo }: SettingPageProps) => {
   const contextValue = {
     sendMessage,
   };
-
+  console.log(isFull);
+  //닉네임이 없거나, 방이 가득차지 않았다면.
   return (
     <WaitingRoomContext.Provider value={contextValue}>
       <ToastContainer position="bottom-left" autoClose={3000} theme="dark" />
       <InteractivePage pages={pages} currentPage={currentPage} />
-      {!nickname && isFull !== 1 && (
+      {!nickname && isFull <= 1 && (
         <NicknameModal title={roomTitle} onClick={handleUpdateNickname} />
       )}
-      {isFull === 1 && <LimitModal />}
-      <ChatWrapper onClick={() => setIsChatOpen(!isChatOpen)}>
-        <ChatIcon />
-      </ChatWrapper>
+      {isFull > 1 && <LimitModal />}
       <ShareIconWrapper onClick={copyUrlHelper}>
         <ShareIcon />
       </ShareIconWrapper>
+      <ChatWrapper onClick={() => setIsChatOpen(!isChatOpen)}>
+        <ChatIcon />
+      </ChatWrapper>
+      <TutorialIconWrapper>
+        <TutorialIcon type="sixHat" />
+      </TutorialIconWrapper>
+
       {isChatOpen && (
         <ChattingContainer>
           <ChattingRoom
@@ -157,14 +166,21 @@ export default SettingPage;
 
 const ChatWrapper = styled.div`
   position: fixed;
-  right: 70px;
+  right: 140px;
   bottom: 70px;
   cursor: pointer;
 `;
 
 const ShareIconWrapper = styled.div`
   position: fixed;
-  right: 140px;
+  right: 210px;
+  bottom: 70px;
+  cursor: pointer;
+`;
+
+const TutorialIconWrapper = styled.div`
+  position: fixed;
+  right: 70px;
   bottom: 70px;
   cursor: pointer;
 `;

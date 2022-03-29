@@ -18,9 +18,6 @@ const Setting = ({ onClick }: SettingProps) => {
         <Title>단어 입력</Title>
         <Desc>아이디어에 관한 단어를 적어주세요!</Desc>
         <SubjectTextField type="randomWord" onClick={handleOnClick} />
-        <SkipButtonWrapper>
-          <SkipButton onClick={handleOnClick} />
-        </SkipButtonWrapper>
       </SettingWrapper>
     </CenterLayout>
   );
