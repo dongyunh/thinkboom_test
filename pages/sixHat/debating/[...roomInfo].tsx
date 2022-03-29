@@ -42,13 +42,18 @@ const SettingPage = ({ roomInfo }: SettingPageProps) => {
     useAppSelector(sixHatSelector);
 
   const [isChatOpen, setIsChatOpen] = useState(false);
-  const [isFull, setIsFull] = useState(userCount.currentUser / userCount.totalUser);
+  const [isFull, setIsFull] = useState(0);
   const [roomTitle, roomId] = roomInfo;
 
   const HandleSocket = useSocketHook('sixhat');
 
   useEffect(() => {
-    setIsFull(userCount.currentUser / userCount.totalUser);
+    if (userCount.totalUser !== 0) {
+      setIsFull(userCount.currentUser / userCount.totalUser);
+    }
+    return () => {
+      setIsFull(0);
+    };
   }, [userCount]);
 
   useEffect(() => {
@@ -124,7 +129,8 @@ const SettingPage = ({ roomInfo }: SettingPageProps) => {
   const contextValue = {
     sendMessage,
   };
-
+  console.log(isFull);
+  //닉네임이 없거나, 방이 가득차지 않았다면.
   return (
     <WaitingRoomContext.Provider value={contextValue}>
       <ToastContainer position="bottom-left" autoClose={3000} theme="dark" />
