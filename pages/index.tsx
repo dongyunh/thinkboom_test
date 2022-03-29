@@ -8,6 +8,7 @@ import { useAppDispatch } from '@redux/hooks';
 import { enableDarkMode, enableLightMode } from '@redux/modules/darkMode';
 
 import { Title, Desc } from '../src/components/common';
+import { persistor } from './_app';
 
 const Home: NextPage = () => {
   const router = useRouter();
@@ -25,7 +26,7 @@ const Home: NextPage = () => {
   };
 
   useEffect(() => {
-    localStorage.removeItem('persist:root');
+    persistor.purge();
     loadTheme();
   }, []);
 

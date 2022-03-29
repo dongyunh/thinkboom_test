@@ -16,6 +16,7 @@ import {
   getUserCount,
 } from './actions';
 import { SixHatState } from './types';
+import { PURGE } from 'redux-persist';
 
 const initialState: SixHatState = {
   currentPage: 0,
@@ -93,6 +94,9 @@ export const sixHatReducer = createReducer(initialState, builder => {
     })
     .addCase(getUserCount, (state, action) => {
       state.userCount = action.payload;
+    })
+    .addCase(PURGE, state => {
+      return initialState;
     });
 });
 
