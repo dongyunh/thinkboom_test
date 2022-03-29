@@ -21,7 +21,7 @@ const ResultBox = ({}) => {
     black: '검정모자',
     yellow: '노란모자',
     green: '초록모자',
-    none: '없음',
+    none: '',
   };
 
   return (
@@ -37,7 +37,7 @@ const ResultBox = ({}) => {
                     key={idx}
                     isMe={data.nickname === nickname}
                     message={data.message}
-                    hatName={hatName[data.hat]}
+                    nickname={data.nickname}
                     hat={data.hat}
                   />
                 );
