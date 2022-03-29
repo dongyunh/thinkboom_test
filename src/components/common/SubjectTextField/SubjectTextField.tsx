@@ -6,42 +6,28 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
 import { sixHatSelector } from '@redux/modules/sixHat';
 import { getSubjectRW } from '@redux/modules/randomWord/actions';
-import { brainWritingSelector } from '../../../redux/modules/brainWriting/selectors';
 
 type SubjectTextFieldProps = {
-  type?: 'randomWord' | 'brainWriting' | 'sixHat';
+  type?: 'randomWord' | 'sixHat';
   onChange?: (e: string) => void;
   onClick?: (arg?: string) => void;
   isAdmin?: boolean;
-  BWisAdmin?: boolean;
 };
 
 type StyledProps = {
   disabled: boolean;
 };
 
-const SubjectTextField = ({
-  type,
-  onChange,
-  onClick,
-  isAdmin = true,
-  BWisAdmin = true,
-}: SubjectTextFieldProps) => {
+const SubjectTextField = ({ type, onChange, onClick, isAdmin = true }: SubjectTextFieldProps) => {
   const dispatch = useAppDispatch();
   const { subject: enteredSubject } = useAppSelector(sixHatSelector);
   const [subject, setSubject] = useState<string>('');
-  const { BWsubject: BWentredSubject } = useAppSelector(brainWritingSelector);
-  const [BWsubject, setBWSubject] = useState<string>('');
+
   const handleGetSubject = () => {
     if (type == 'randomWord') {
       dispatch(getSubjectRW(subject));
       if (!onClick) return;
       onClick();
-    }
-
-    if (type == 'brainWriting') {
-      if (!onClick) return;
-      onClick(BWsubject);
     }
 
     if (type == 'sixHat') {
@@ -50,14 +36,14 @@ const SubjectTextField = ({
     }
   };
 
-  return type === 'sixHat' ? (
+  return (
     <Card width={600} height={124}>
       <TextFieldBox disabled={!isAdmin}>
         <TextField
           maxLength={28}
           defaultValue={enteredSubject}
           disabled={!isAdmin}
-          onChange={e => setBWSubject(e.target.value)}
+          onChange={e => setSubject(e.target.value)}
         />
         {isAdmin && (
           <Button onClick={handleGetSubject}>
@@ -66,23 +52,7 @@ const SubjectTextField = ({
         )}
       </TextFieldBox>
     </Card>
-  ) : null || type === 'brainWriting' ? (
-    <Card width={600} height={124}>
-      <TextFieldBox disabled={!BWisAdmin}>
-        <TextField
-          maxLength={28}
-          defaultValue={BWentredSubject}
-          disabled={!BWisAdmin}
-          onChange={e => setSubject(e.target.value)}
-        />
-        {BWisAdmin && (
-          <Button onClick={handleGetSubject}>
-            <ArrowIcon fontSize="large" />
-          </Button>
-        )}
-      </TextFieldBox>
-    </Card>
-  ) : null;
+  );
 };
 
 const TextFieldBox = styled.div<StyledProps>`
