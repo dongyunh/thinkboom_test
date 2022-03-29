@@ -28,4 +28,3 @@ const hatData: HatDataType[] = [
 ];
 
 export default hatData;
-햐;

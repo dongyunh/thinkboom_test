@@ -26,6 +26,7 @@ const DevatingChatBox = ({ onClick }: DevatingChatBoxProps) => {
     black: '검정모자',
     yellow: '노란모자',
     green: '초록모자',
+    none: '',
   };
 
   return (
@@ -40,7 +41,9 @@ const DevatingChatBox = ({ onClick }: DevatingChatBoxProps) => {
             {userList.map(user => {
               return (
                 <UserProfile key={user.nickname}>
-                  {user.hat !== null && <HatImage type={user.hat} width={20} height={20} />}
+                  {user.hat !== null && (
+                    <HatImage isMe={true} type={user.hat} width={20} height={20} />
+                  )}
                   <User>{user.nickname}</User>
                 </UserProfile>
               );

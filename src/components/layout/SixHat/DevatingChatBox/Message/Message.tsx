@@ -24,7 +24,7 @@ const Message = ({ isMe, message, hatName, hat }: MessageProps) => {
       ) : (
         <OtherMessageBox>
           <ProfileBox>
-            <HatImage type={hat} width={30} height={30} />
+            <HatImage isMe={true} type={hat} width={30} height={30} />
             <HatName>{hatName}</HatName>
           </ProfileBox>
           <Box>{message}</Box>
