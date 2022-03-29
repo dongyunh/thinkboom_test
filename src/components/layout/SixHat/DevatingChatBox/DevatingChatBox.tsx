@@ -35,7 +35,7 @@ const DevatingChatBox = ({ onClick }: DevatingChatBoxProps) => {
       <DownBox>
         <UserListBox>
           <MyHatBox>
-            <HatImage type={myHat} width={70} height={70} />
+            <HatImage isMe={true} type={myHat} width={70} height={70} />
           </MyHatBox>
           <UserList>
             {userList.map(user => {
