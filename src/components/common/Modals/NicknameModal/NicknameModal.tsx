@@ -40,7 +40,7 @@ const NicknameModal = ({ title, onClick }: NicknameModalProps) => {
             onChange={checkValidation}
           />
         </TextFieldWrapper>
-        <Button text="개설하기" onClick={handleOnClick} />
+        <Button text="입력하기" onClick={handleOnClick} />
       </MakeRoomContainer>
     </Modal>
   );

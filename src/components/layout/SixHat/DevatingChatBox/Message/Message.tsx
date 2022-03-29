@@ -8,7 +8,7 @@ import { HatImage } from '@components/common';
 type MessageProps = {
   isMe: boolean;
   message: string | null;
-  hatName: string | null;
+  nickname: string | null;
   hat: HatType;
 };
 
@@ -16,7 +16,7 @@ type StyleProps = {
   isMe: boolean;
 };
 
-const Message = ({ isMe, message, hatName, hat }: MessageProps) => {
+const Message = ({ isMe, message, hat, nickname }: MessageProps) => {
   return (
     <MessageBox isMe={isMe}>
       {isMe ? (
@@ -24,8 +24,8 @@ const Message = ({ isMe, message, hatName, hat }: MessageProps) => {
       ) : (
         <OtherMessageBox>
           <ProfileBox>
-            <HatImage type={hat} width={30} height={30} />
-            <HatName>{hatName}</HatName>
+            <HatImage isMe={true} type={hat} width={30} height={30} />
+            <NicknameBox>{nickname}</NicknameBox>
           </ProfileBox>
           <Box>{message}</Box>
         </OtherMessageBox>
@@ -47,17 +47,13 @@ const OtherMessageBox = styled.div`
   gap: 24px;
 `;
 
-const HatImg = styled.img`
-  width: 50px;
-`;
-
 const ProfileBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
 `;
 
-const HatName = styled.span``;
+const NicknameBox = styled.span``;
 
 const Box = styled.div`
   border: 5px solid ${themedPalette.border_1};
@@ -68,7 +64,5 @@ const Box = styled.div`
   align-items: center;
   max-width: 406px;
 `;
-
-const MyMessageBox = styled.div``;
 
 export { Message };
