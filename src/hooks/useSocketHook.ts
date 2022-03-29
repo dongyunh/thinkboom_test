@@ -12,6 +12,7 @@ import {
   updateCurrentPage,
 } from '../redux/modules/sixHat';
 import { getUserCount } from '../redux/modules/CountUser';
+import { getSubjectBW } from '../redux/modules/brainWriting/actions';
 
 import mixHatsHelper from '@utils/mixHatsHelper';
 import { toast } from 'react-toastify';
@@ -44,9 +45,28 @@ export type SixHatSendData = {
   currentPage?: number;
 };
 
+export type BrainWritingResponseData = {
+  type: 'ENTER' | 'TALK' | 'QUIT';
+  roomId: string | null;
+  sender: string | null;
+  senderId: number | null;
+  message: string | null;
+  subject: string;
+  // createdAt: string | null;
+};
+
+export type BrainWritingSendData = {
+  type: 'ENTER' | 'TALK' | 'QUIT' | 'SUBJECT'
+  roomId: string | null;
+  sender: string | null;
+  senderId: number | null;
+  message: string | null;
+  subject?: string;
+};
+
+
 export default function useSocketHook(type: 'sixhat' | 'brainwriting') {
   const dispatch = useAppDispatch();
-  const { myHat } = useAppSelector(sixHatSelector);
 
   const _api = type == 'sixhat' ? '/subSH/api/sixHat/rooms/' : '/sub/api/brainWriting/rooms/';
   const _messageApi =
@@ -64,7 +84,46 @@ export default function useSocketHook(type: 'sixhat' | 'brainwriting') {
       this._roomId = null;
       this._senderId = null;
     }
+    connectBW(senderId: number | null, roomId: string){
+      this._senderId = senderId;
+      this._roomId = roomId;
+      console.log(senderId, roomId);
+  
+      this.StompClient.connect( {senderId: this._senderId} , () => {
+        this.StompClient.subscribe(
+          `/sub/api/brainwriting/rooms/${roomId}`,
+          data => {
+            const response = JSON.parse(data.body);
+            console.log(response);
+            
+            if (response.type === 'ENTER') {
+              const User = {
+                nickname: response.sender,
+              };
+              // dispatch(getUserList(User));
+              console.log(User)
+            }
+            if (response.type === 'TALK') {
+              const newMessage = {
+                nickname: response.sender,
+                message: response.message,
+              };
+              dispatch(getMessages(newMessage));
+              toast.info('메시지가 도착했습니다');
+            }
+            
+            if (response.type === 'SUBJECT') {
+              console.log('되돌아온 주제', response.subject);
+              dispatch(getSubjectBW(response.subject));
+              toast.info('주제가 공유되었습니다');
+            }
 
+          },
+          { senderId: this._senderId, category: 'BW' },
+        );
+      });
+  
+    }
     connectSH(senderId: number | null, roomId: string) {
       this._senderId = senderId;
       this._roomId = roomId;
@@ -186,7 +245,7 @@ export default function useSocketHook(type: 'sixhat' | 'brainwriting') {
       }
     };
 
-    sendMessageDB = (sender: string, message: string) => {
+    sendMessageDB = (sender: string, message: string, myHat: HatType) => {
       try {
         // send할 데이터
         const data: SixHatSendData = {
@@ -273,7 +332,52 @@ export default function useSocketHook(type: 'sixhat' | 'brainwriting') {
         console.log('message 소켓 함수 에러', e);
       }
     };
+     //BW
+     BWsend = (data: BrainWritingSendData) => {
+      this.waitForConnection(this.StompClient, () => {
+        this.StompClient.debug = () => {};
+        this.StompClient.send(
+          '/pub/api/brainwriting/chat/message',
+          { senderId: this._senderId },
+          JSON.stringify(data),
+        );
+      });
+    };
+    BWsendMessage = (sender: string, message: string) => {
+      try {
+        // send할 데이터
+        const data: BrainWritingSendData = {
+          type: 'TALK',
+          roomId: this._roomId,
+          sender: sender,
+          senderId: this._senderId,
+          message: message,
+        };
+        this.BWsend(data);
+      } catch (e) {
+        console.log('message 소켓 함수 에러', e);
+      }
+    };
+    BWsubmitSubject = (subject: string) => {
+      try {
+        // send할 데이터
+        const data: BrainWritingSendData = {
+          type: 'SUBJECT',
+          roomId: this._roomId,
+          sender: null,
+          senderId: this._senderId,
+          subject: subject,
+          message: null,
+        };
+        this.BWsend(data);
+      } catch (e) {
+        console.log('message 소켓 함수 에러', e);
+      }
+    };
   }
+  
+
+  
 
   return HandleSocket;
 }

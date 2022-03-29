@@ -19,6 +19,8 @@ type WaitingRoomProps = {
 const WaitingRoom = ({ onClickSubmit, onClickComplete, onChange }: WaitingRoomProps) => {
   const { isAdmin, subject, userCount } = useAppSelector(sixHatSelector);
   const { BWisAdmin, BWisSubmit } = useAppSelector(brainWritingSelector);
+  const A = useAppSelector(brainWritingSelector);
+  console.log(A);
   const handleOnclickSubmit = (arg?: string) => {
     if (!onClickSubmit) return;
     onClickSubmit(arg);
@@ -39,12 +41,23 @@ const WaitingRoom = ({ onClickSubmit, onClickComplete, onChange }: WaitingRoomPr
       <Empty />
       <TextFieldWrapper>
         <Title text="회의 주제" />
-        <SubjectTextField
-          isAdmin={isAdmin}
-          type="sixHat"
-          onChange={handleOnChange}
-          onClick={handleOnclickSubmit}
-        />
+        {isAdmin ? (
+          BWisAdmin === false && (
+            <SubjectTextField
+              type="sixHat"
+              isAdmin={isAdmin}
+              onChange={handleOnChange}
+              onClick={handleOnclickSubmit}
+            />
+          )
+        ) : (
+          <SubjectTextField
+            type="brainWriting"
+            BWisAdmin={BWisAdmin}
+            onChange={handleOnChange}
+            onClick={handleOnclickSubmit}
+          />
+        )}
       </TextFieldWrapper>
       <PrimaryButton
         text="완료"

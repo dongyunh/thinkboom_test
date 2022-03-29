@@ -21,6 +21,7 @@ const Result = ({ shRoomId }: ResultProps) => {
 
   const handleCancel = () => {
     axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/api/sixHat/sharing/${shRoomId}`);
+    router.replace('/');
   };
 
   return (

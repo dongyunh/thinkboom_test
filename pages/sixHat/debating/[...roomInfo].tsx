@@ -13,10 +13,12 @@ import {
   clearChatHistory,
 } from '../../../src/redux/modules/sixHat';
 import { NicknameModal, LimitModal } from '../../../src/components/common';
+import { RoutingAlertModal } from '../../../src/components/common/Modals/RoutingAlertModal';
 import { ChattingRoom } from '../../../src/components/common';
 import styled from 'styled-components';
 import useSocketHook from '../../../src/hooks/useSocketHook';
 import { HatType, UserList } from '@redux/modules/sixHat/types';
+import { selectPermit } from '@redux/modules/permit';
 import { ToastContainer } from 'react-toastify';
 import copyUrlHelper from '@utils/copyUrlHelper';
 
@@ -33,8 +35,9 @@ let ConnectedSocket: any;
 
 const SettingPage = ({ roomInfo }: SettingPageProps) => {
   const dispatch = useAppDispatch();
-  const { currentPage, nickname, chatHistory, senderId, userCount } =
+  const { currentPage, nickname, chatHistory, senderId, userCount, myHat } =
     useAppSelector(sixHatSelector);
+  const { isRoutingModalOpen } = useAppSelector(selectPermit);
 
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [isFull, setIsFull] = useState(0);
@@ -72,8 +75,8 @@ const SettingPage = ({ roomInfo }: SettingPageProps) => {
     ConnectedSocket.sendMessage(nickname, message);
   };
 
-  const handelSendDevatingMessage = (message: string) => {
-    ConnectedSocket.sendMessageDB(nickname, message);
+  const handelSendDebatingMessage = (message: string) => {
+    ConnectedSocket.sendMessageDB(nickname, message, myHat);
   };
 
   const handleNextPage = (pageNum: number) => {
@@ -117,7 +120,7 @@ const SettingPage = ({ roomInfo }: SettingPageProps) => {
       ),
     },
     {
-      component: <DevatingRoom onClick={handelSendDevatingMessage} />,
+      component: <DevatingRoom onClick={handelSendDebatingMessage} />,
     },
   ];
 
@@ -134,12 +137,15 @@ const SettingPage = ({ roomInfo }: SettingPageProps) => {
         <NicknameModal title={roomTitle} onClick={handleUpdateNickname} />
       )}
       {isFull > 1 && <LimitModal />}
+      {isRoutingModalOpen && <RoutingAlertModal />}
       <ShareIconWrapper onClick={copyUrlHelper}>
         <ShareIcon />
       </ShareIconWrapper>
-      <ChatWrapper onClick={() => setIsChatOpen(!isChatOpen)}>
-        <ChatIcon />
-      </ChatWrapper>
+      {currentPage !== 2 && (
+        <ChatWrapper onClick={() => setIsChatOpen(!isChatOpen)}>
+          <ChatIcon />
+        </ChatWrapper>
+      )}
       <TutorialIconWrapper>
         <TutorialIcon type="sixHat" />
       </TutorialIconWrapper>
@@ -161,14 +167,14 @@ export default SettingPage;
 
 const ChatWrapper = styled.div`
   position: fixed;
-  right: 140px;
+  right: 210px;
   bottom: 70px;
   cursor: pointer;
 `;
 
 const ShareIconWrapper = styled.div`
   position: fixed;
-  right: 210px;
+  right: 140px;
   bottom: 70px;
   cursor: pointer;
 `;

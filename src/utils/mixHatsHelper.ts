@@ -23,8 +23,11 @@ const mixHatsHelper = (users: UserList) => {
     };
 
     tmpHatArr.delete(randomHat);
-    if (tmpHatArr.size === 0) tmpHatArr = new Set(hats);
-
+    if (tmpHatArr.size === 0) {
+      const removedBlueSetArr = new Set(hats);
+      removedBlueSetArr.delete('blue');
+      tmpHatArr = removedBlueSetArr
+    }
     sumedUser[idx] = setedUser;
 
     return sumedUser;
