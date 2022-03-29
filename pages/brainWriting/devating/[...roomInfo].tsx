@@ -1,7 +1,7 @@
 import React, { useState, useEffect, createContext } from 'react';
 import { useRouter } from 'next/router';
 import { GetServerSideProps } from 'next';
-import { InteractivePage, WaitingRoom, Share } from '../../../src/components/common';
+import { InteractivePage, WaitingRoom } from '../../../src/components/common';
 import { SelectHat, DevatingRoom } from '../../../src/components/layout/SixHat';
 import { BwCard } from '../../../src/components/common/BwCard';
 import { BwComment } from '@components/common/BwCommnet';
@@ -126,9 +126,7 @@ const SettingPage = ({ roomInfo }: SettingPageProps) => {
       <ChatIcon onClick={() => setIsChatOpen(!isChatOpen)}>
         <CommentIcon className={classes.icon} />
       </ChatIcon>
-      <ShareIconWrapper onClick={copyUrlHelper}>
-        <Share />
-      </ShareIconWrapper>
+      <ShareIconWrapper onClick={copyUrlHelper}></ShareIconWrapper>
       {isChatOpen && (
         <ChattingContainer>
           <ChattingRoom
