@@ -9,9 +9,10 @@ import {
   sixHatSelector,
   getRandomHatList,
   getSubjectSH,
-  getUserCount,
   updateCurrentPage,
 } from '../redux/modules/sixHat';
+import { getUserCount } from '../redux/modules/CountUser';
+
 import mixHatsHelper from '@utils/mixHatsHelper';
 import { toast } from 'react-toastify';
 

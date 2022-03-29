@@ -34,32 +34,20 @@ const WaitingRoom = ({ onClickSubmit, onClickComplete, onChange }: WaitingRoomPr
   };
 
   return (
-    <>
-      <HeaderBar>
-        <>
-          <Empty />
-          <CountingUser totalUser={userCount.totalUser} currentUser={userCount.currentUser} />
-        </>
-      </HeaderBar>
-      <Grid>
-        <Empty />
-        <TextFieldWrapper>
-          <Title text="회의 주제" />
-          <SubjectTextField
-            isAdmin={isAdmin}
-            type="sixHat"
-            onChange={handleOnChange}
-            onClick={handleOnclickSubmit}
-          />
-        </TextFieldWrapper>
-        <PrimaryButton
-          text="완료"
-          onClick={handleOnClickComplete}
-          disabled={!(subject && isAdmin)}
+    <Grid>
+      <Empty />
+      <TextFieldWrapper>
+        <Title text="회의 주제" />
+        <SubjectTextField
+          isAdmin={isAdmin}
+          type="sixHat"
+          onChange={handleOnChange}
+          onClick={handleOnclickSubmit}
         />
-        <BackGroundImage />
-      </Grid>
-    </>
+      </TextFieldWrapper>
+      <PrimaryButton text="완료" onClick={handleOnClickComplete} disabled={!(subject && isAdmin)} />
+      <BackGroundImage />
+    </Grid>
   );
 };
 
