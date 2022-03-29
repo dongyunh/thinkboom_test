@@ -19,16 +19,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     <>
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
-          <HeaderBar>
-            <>
-              <Link href="/">
-                <a>
-                  <Image src={Logo} width="300" height="" />
-                </a>
-              </Link>
-              <DarkModeToggle />
-            </>
-          </HeaderBar>
+          <HeaderBar />
           <Component {...pageProps} />
           <div id="modal_root" />
         </PersistGate>
