@@ -21,6 +21,7 @@ const ResultBox = ({}) => {
     black: '검정모자',
     yellow: '노란모자',
     green: '초록모자',
+    none: '없음',
   };
 
   return (

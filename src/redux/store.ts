@@ -2,23 +2,25 @@ import { Action, configureStore, ThunkAction, getDefaultMiddleware } from '@redu
 import { counterReducer } from './modules/counter';
 import { kanyeReducer } from './modules/kanye';
 import { randomWordReducer } from './modules/randomWord';
+import { brainWritingReducer } from './modules/brainWriting';
 import { sixHatReducer } from './modules/sixHat';
 import { darkmodeReducer } from './modules/darkMode';
-import { userCountReducer } from './modules/CountUser';
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import { combineReducers } from 'redux';
+import {userCountReducer} from "./modules/CountUser"
 
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['randomWord', 'sixHat'],
+  whitelist: ['randomWord','brainWriting','sixHat'],
 };
 
 const reducers = combineReducers({
   counter: counterReducer,
   kanyeQuote: kanyeReducer,
   randomWord: randomWordReducer,
+  brainWriting: brainWritingReducer,
   sixHat: sixHatReducer,
   darkMode: darkmodeReducer,
   userCount: userCountReducer,
