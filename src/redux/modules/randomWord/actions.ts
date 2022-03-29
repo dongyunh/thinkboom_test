@@ -1,7 +1,6 @@
 import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { RootState } from '../../store';
-import { useRouter } from 'next/router';
 
 type SelectWordPayload = {
   word: string;
@@ -19,7 +18,7 @@ const prefix = 'randomWord';
 
 export const updateCurrentPage = createAction<number>(`${prefix}/UPDATE_CURRENT_PAGE`);
 export const selectWord = createAction<SelectWordPayload>(`${prefix}/SELECT_WORD`);
-export const getSubject = createAction<string>(`${prefix}/GET_SUBJECT`);
+export const getSubjectRW = createAction<string>(`${prefix}/GET_SUBJECT`);
 
 export const getRandomWord = createAsyncThunk(`${prefix}/GET_RANDOM_WORD`, async () => {
   const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/randomWord`);

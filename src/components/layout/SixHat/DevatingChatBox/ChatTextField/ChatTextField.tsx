@@ -10,14 +10,25 @@ type ChatTextFieldProps = {
 const ChatTextField = ({ onChange, onClick }: ChatTextFieldProps) => {
   const [contents, setContents] = useState<string>('');
 
-  const handleOnClick = () => {
+  const handleSendMessage = () => {
     onClick(contents);
+  };
+
+  const onKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      handleSendMessage();
+      setContents('');
+    }
   };
 
   return (
     <TextFieldContainer>
-      <TextField onChange={e => setContents(e.target.value)} />
-      <Button onClick={handleOnClick}>입력</Button>
+      <TextField
+        value={contents}
+        onChange={e => setContents(e.target.value)}
+        onKeyPress={onKeyPress}
+      />
+      <Button onClick={handleSendMessage}>입력</Button>
     </TextFieldContainer>
   );
 };

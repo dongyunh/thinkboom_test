@@ -29,6 +29,7 @@ type ThemeVariables = {
   toggle_bg: string;
   dropdown_list_hover: string;
   modal_button_normal: string;
+  modal_gray_button_normal: string;
   modal_button_hover: string;
   modal_button_disabled: string;
   card_bg_normal: string;
@@ -46,6 +47,9 @@ type ThemeVariables = {
   box_subject: string;
   box_bg: string;
   box_complete: string;
+  subject_button_disabled: string;
+  counting_user_bg: string;
+  counting_user_text: string;
 };
 
 type Theme = 'light' | 'dark';
@@ -84,6 +88,7 @@ const themeVariableSets: Record<Theme, ThemeVariables> = {
     toggle_bg: '#FFFFFF',
     dropdown_list_hover: '#1B1818',
     modal_button_normal: '#1B1818',
+    modal_gray_button_normal: '#424242',
     modal_button_hover: '#383838',
     modal_button_disabled: '#EEEEEE',
     card_bg_normal: '#FFFFFF',
@@ -101,6 +106,9 @@ const themeVariableSets: Record<Theme, ThemeVariables> = {
     box_subject: '#000000',
     box_bg: '#FFFFFF',
     box_complete: '#000000',
+    subject_button_disabled: '#616161',
+    counting_user_bg: '#1B1B1B',
+    counting_user_text: '#A6A6A6',
   },
   dark: {
     bg_page1: '#1A1B1F',
@@ -133,6 +141,7 @@ const themeVariableSets: Record<Theme, ThemeVariables> = {
     toggle_bg: '#1B1B1B',
     dropdown_list_hover: '#2B2C31',
     modal_button_normal: '#EEEEEE',
+    modal_gray_button_normal: '#424242',
     modal_button_hover: '#050505',
     modal_button_disabled: '#45474A',
     card_bg_normal: '#45474A',
@@ -150,6 +159,9 @@ const themeVariableSets: Record<Theme, ThemeVariables> = {
     box_subject: '#2B2C31',
     box_bg: '#45474A',
     box_complete: '#2B2C31',
+    subject_button_disabled: '#616161',
+    counting_user_bg: '#EEEEEE',
+    counting_user_text: '#1B1B1B',
   },
 };
 

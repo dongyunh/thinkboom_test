@@ -5,6 +5,8 @@ import { Card } from '../../../common';
 import { HatImage } from '@components/common';
 import hatData from '../../../../mock/hatData';
 import { UserList, HatType } from '@redux/modules/sixHat/types';
+import { useAppSelector } from '@redux/hooks';
+import { sixHatSelector } from '@redux/modules/sixHat';
 
 type SelectHatBoxProps = {
   subject: string;
@@ -28,6 +30,7 @@ const SelectHatBox = ({
   onClickRandom,
 }: SelectHatBoxProps) => {
   const [isMouseOver, setIsMouseOver] = useState(false);
+  const { isAdmin } = useAppSelector(sixHatSelector);
 
   const handleOnClickHat = (hat: string) => {
     if (!onClickHat) return;
@@ -38,18 +41,18 @@ const SelectHatBox = ({
     <Container>
       <SubjectBox>
         {subject}
-        <RandomButton onClick={() => onClickRandom(userList)}>랜덤</RandomButton>
+        {isAdmin && <RandomButton onClick={() => onClickRandom(userList)}>랜덤</RandomButton>}
       </SubjectBox>
       <DownBox>
         <UserListBox>
           <MyHatBox>
-            <HatImage type={myHat} width={80} height={80} />
+            <HatImage isMe={true} type={myHat} width={100} height={100} />
           </MyHatBox>
           <UserListColumn>
             {userList.map((user, idx) => {
               return (
-                <UserProfile key={idx}>
-                  {user.hat !== null && <HatImage type={user.hat} width={20} height={20} />}
+                <UserProfile key={user.nickname}>
+                  {user.hat !== null && <HatImage type={user.hat} width={25} height={25} />}
                   <UserNickname>{user.nickname}</UserNickname>
                 </UserProfile>
               );
@@ -72,7 +75,7 @@ const SelectHatBox = ({
                   </HatBox>
                 ) : (
                   <HatBox>
-                    <HatImage type={hat.value} width={100} />
+                    <HatImage type={hat.value} width={120} height={120} />
                     <div>{hat.text}</div>
                     <TouchArea
                       onMouseOver={() => setIsMouseOver(true)}
@@ -127,6 +130,7 @@ const RandomButton = styled.button`
   right: 70px;
   border: none;
   border-radius: 12px;
+  cursor: pointer;
 `;
 
 const DownBox = styled.div`

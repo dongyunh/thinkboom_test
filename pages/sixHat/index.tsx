@@ -43,8 +43,9 @@ const SixHat = () => {
     {
       component: (
         <StartPage
-          title="Six Thinking Hat"
-          desc="학교 동아리, 게임 그룹, 세계 예술 감상 커뮤니티에 소속되어 유대감을 느낄 수 있는"
+          pageType="sixhat"
+          title="6가지 모자"
+          desc="여섯가지 색상의 모자가 지닌 역할에 맞춰 생각함으로써 다양한 측면에서 폭넓은 사고를 할 수 있도록 도와주는 기법입니다."
           onClick={() => handleNextPage(1)}
         />
       ),
