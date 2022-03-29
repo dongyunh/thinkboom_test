@@ -42,6 +42,7 @@ const S_ModalOverlay = styled.div`
   position: fixed;
   top: 0;
   width: 100vw;
+  z-index: 998;
 `;
 
 const S_ModalWrapper = styled.div`
@@ -56,7 +57,7 @@ const S_ModalWrapper = styled.div`
   top: 50%;
   transform: translate(-50%, -50%);
   width: 508px;
-  z-index: 99;
+  z-index: 999;
 `;
 
 export { Modal };
