@@ -38,7 +38,7 @@ let ConnectedSocket: any;
 
 const SettingPage = ({ roomInfo }: SettingPageProps) => {
   const dispatch = useAppDispatch();
-  const { currentPage, nickname, chatHistory, senderId, userCount } =
+  const { currentPage, nickname, chatHistory, senderId, userCount, myHat } =
     useAppSelector(sixHatSelector);
 
   const [isChatOpen, setIsChatOpen] = useState(false);
@@ -77,8 +77,8 @@ const SettingPage = ({ roomInfo }: SettingPageProps) => {
     ConnectedSocket.sendMessage(nickname, message);
   };
 
-  const handelSendDevatingMessage = (message: string) => {
-    ConnectedSocket.sendMessageDB(nickname, message);
+  const handelSendDebatingMessage = (message: string) => {
+    ConnectedSocket.sendMessageDB(nickname, message, myHat);
   };
 
   const handleNextPage = (pageNum: number) => {
@@ -122,7 +122,7 @@ const SettingPage = ({ roomInfo }: SettingPageProps) => {
       ),
     },
     {
-      component: <DevatingRoom onClick={handelSendDevatingMessage} />,
+      component: <DevatingRoom onClick={handelSendDebatingMessage} />,
     },
   ];
 

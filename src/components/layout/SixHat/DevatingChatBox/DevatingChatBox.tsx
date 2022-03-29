@@ -142,9 +142,7 @@ const UserProfile = styled.div`
   padding-top: 10px;
 `;
 
-const User = styled.div`
-  margin-bottom: 8px;
-`;
+const User = styled.div``;
 
 const MessageBox = styled.div`
   display: flex;
