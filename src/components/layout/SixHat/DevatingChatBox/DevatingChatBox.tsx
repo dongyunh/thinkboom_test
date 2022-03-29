@@ -59,7 +59,7 @@ const DevatingChatBox = ({ onClick }: DevatingChatBoxProps) => {
                     key={idx}
                     isMe={data.nickname === nickname}
                     message={data.message}
-                    hatName={hatName[data.hat]}
+                    nickname={data.nickname}
                     hat={data.hat}
                   />
                 );
